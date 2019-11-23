@@ -1,6 +1,6 @@
 //
 //  ListArticlesView.swift
-//  NewsReader iOS
+//  NewsReader
 //
 //  Created by Basem Emara on 2019-11-20.
 //
@@ -9,41 +9,31 @@ import SwiftUI
 import NewsCore
 
 struct ListArticlesView: View {
-    @EnvironmentObject var dependency: AppDependency
-    @EnvironmentObject var composer: SceneComposer
+    @ObservedObject var state: ListArticlesState
     
-    let articles: [Article] // Immutable, only updates from the top
+    let composer: ListArticlesComposer
     
     var body: some View {
         NavigationView {
-            List(articles) { article in
+            List(state.articles) { article in
                 NavigationLink(destination: self.composer.showArticle(for: article)) {
                     Text(article.title)
                 }
             }
             .navigationBarTitle(Text("News"))
             .navigationBarItems(trailing:
-                Button(
-                    action: {
-                        // TODO: Temporary until scene flow architecture put in place
-                        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                        
-                        guard self.articles.isEmpty else {
-                            appDelegate.state.articles = []
-                            return
-                        }
-                        
-                        let articleWorker: ArticleWorkerType = self.dependency.resolve()
-                        articleWorker.fetch(with: .init()) {
-                            guard case .success(let value) = $0 else { return }
-                            appDelegate.state.articles = value
-                        }
-                    },
-                    label: {
-                        Text(articles.isEmpty ? "Load" : "Clear")
-                    }
-                )
+                Button(action: { self.state.dispatch(.loadArticles) }) {
+                    Text(self.state.articles.isEmpty ? "Load" : "Clear")
+                }
             )
         }
     }
 }
+
+#if DEBUG
+struct ListArticlesView_Previews: PreviewProvider {
+    static var previews: some View {
+        composer.listArticles()
+    }
+}
+#endif

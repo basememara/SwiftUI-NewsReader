@@ -1,6 +1,6 @@
 //
-//  SceneFactory.swift
-//  NewsReader iOS
+//  SceneComposer.swift
+//  NewsReader
 //
 //  Created by Basem Emara on 2019-11-21.
 //
@@ -10,21 +10,38 @@ import SwiftUI
 import NewsCore
 
 /// Use to construct views centrally.
-class SceneComposer: ObservableObject {
+struct SceneComposer {
+    private let dependency: AppDependency
+    private let state: AppState
     
-}
-
-extension SceneComposer {
-    
-    func launchMain() -> some View {
-        LaunchMainView()
+    init(dependency: AppDependency, state: AppState) {
+        self.dependency = dependency
+        self.state = state
     }
 }
 
 extension SceneComposer {
     
-    func listArticles(for articles: [Article]) -> some View {
-        ListArticlesView(articles: articles)
+    func launchMain() -> some View {
+        LaunchMainView(
+            composer: LaunchMainComposer(from: self)
+        )
+    }
+}
+
+extension SceneComposer {
+    
+    func listArticles() -> some View {
+        ListArticlesView(
+            state: ListArticlesState(
+                from: state,
+                with: ListArticlesReducer(
+                    dependency: dependency,
+                    state: state
+                )
+            ),
+            composer: ListArticlesComposer(from: self)
+        )
     }
     
     func showArticle(for article: Article) -> some View {
@@ -55,8 +72,21 @@ extension SceneComposer {
 
 extension SceneComposer {
     
-    func fetch(for url: URL, with state: AppState) -> some View {
+    func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap
         showArticle(for: state.articles.first(where: { $0.url == url.absoluteString })!)
     }
 }
+
+#if DEBUG
+extension PreviewProvider {
+    
+    /// Use for constructing previews.
+    static var composer: SceneComposer {
+        SceneComposer(
+            dependency: AppDependency(),
+            state: AppState()
+        )
+    }
+}
+#endif

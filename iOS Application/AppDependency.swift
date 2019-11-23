@@ -1,6 +1,6 @@
 //
 //  AppDependency.swift
-//  NewsReader iOS
+//  NewsReader
 //
 //  Created by Basem Emara on 2019-11-20.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import NewsCore
 
-class AppDependency: ObservableObject, NewsCoreDependency {
+struct AppDependency: NewsCoreDependency {
     private let environment: Environment
     
     init() {

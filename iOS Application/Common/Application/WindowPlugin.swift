@@ -1,6 +1,6 @@
 //
 //  WindowPlugin.swift
-//  NewsReader iOS
+//  NewsReader
 //
 //  Created by Basem Emara on 2019-11-21.
 //
@@ -10,30 +10,17 @@ import SwiftUI
 import NewsCore
 
 final class WindowPlugin {
-    
-    // MARK: - Components
-    
-    private let dependency: AppDependency
-    private let state: AppState
-    private let composer: SceneComposer
-    
-    // MARK: - State
-    
     private weak var delegate: ScenePluggableDelegate?
-    private lazy var log: LogWorkerType = dependency.resolve()
+    private let composer: SceneComposer
+    private let log: LogWorkerType
     
-    // MARK: - Lifecycle
-    
-    init(
-        for delegate: ScenePluggableDelegate?,
-        dependency: AppDependency,
-        state: AppState,
-        composer: SceneComposer
-    ) {
+    init(for delegate: ScenePluggableDelegate) {
         self.delegate = delegate
-        self.dependency = dependency
-        self.state = state
-        self.composer = composer
+        self.composer = SceneComposer(
+            dependency: delegate.dependency,
+            state: delegate.state
+        )
+        self.log = delegate.dependency.resolve()
     }
 }
 
@@ -52,7 +39,7 @@ extension WindowPlugin: ScenePlugin {
         if let userActivity = connectionOptions.userActivities.first(where: { $0.activityType == NSUserActivityTypeBrowsingWeb }),
             let webpageURL = userActivity.webpageURL {
                 log.info("Link passed to app: \(webpageURL.absoluteString)")
-                set(rootViewTo: composer.fetch(for: webpageURL, with: state))
+                set(rootViewTo: composer.fetch(for: webpageURL))
                 return
         }
         
@@ -70,7 +57,7 @@ extension WindowPlugin {
         }
         
         log.info("Link passed to app: \(webpageURL.absoluteString)")
-        set(rootViewTo: composer.fetch(for: webpageURL, with: state))
+        set(rootViewTo: composer.fetch(for: webpageURL))
     }
 }
 
@@ -81,9 +68,6 @@ private extension WindowPlugin {
     func set<T: View>(rootViewTo view: T) {
         delegate?.window?.rootViewController = UIHostingController(
             rootView: view
-                .environmentObject(dependency)
-                .environmentObject(state)
-                .environmentObject(composer)
         )
     }
 }

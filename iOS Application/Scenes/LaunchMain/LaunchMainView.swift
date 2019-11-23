@@ -1,25 +1,21 @@
 //
-//  LaunchMain.swift
-//  NewsReader iOS
+//  LaunchMainView.swift
+//  NewsReader
 //
 //  Created by Basem Emara on 2019-11-13.
 //
-
-import Foundation
 
 import SwiftUI
 import NewsCore
 
 struct LaunchMainView: View {
-    @EnvironmentObject var dependency: AppDependency
-    @EnvironmentObject var state: AppState
-    @EnvironmentObject var composer: SceneComposer
-    
     @State private var selectionTab = Tab.latest
+
+    let composer: LaunchMainComposer
     
     var body: some View {
         TabView(selection: $selectionTab) {
-            composer.listArticles(for: state.articles)
+            composer.listArticles()
                 .font(.title)
                 .tabItem({
                     Image(systemName: "doc.text")
@@ -65,9 +61,8 @@ private extension LaunchMainView {
 
 #if DEBUG
 struct LaunchMainView_Previews: PreviewProvider {
-    
     static var previews: some View {
-        LaunchMainView()
+        composer.launchMain()
     }
 }
 #endif
