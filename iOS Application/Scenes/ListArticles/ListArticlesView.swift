@@ -22,10 +22,22 @@ struct ListArticlesView: View {
             }
             .navigationBarTitle(Text("News"))
             .navigationBarItems(trailing:
-                Button(action: { self.state.dispatch(.loadArticles) }) {
-                    Text(self.state.articles.isEmpty ? "Load" : "Clear")
-                }
+                Button(
+                    action: {
+                        guard self.state.articles.isEmpty else {
+                            self.state.dispatch(.clearArticles)
+                            return
+                        }
+                        
+                        self.state.dispatch(.loadArticles)
+                    },
+                    label: {
+                        Text(self.state.articles.isEmpty ? "Load" : "Clear")
+                    }
+                )
             )
+        }.onAppear {
+            self.state.dispatch(.loadArticles)
         }
     }
 }

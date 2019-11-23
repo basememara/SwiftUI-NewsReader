@@ -20,20 +20,11 @@ struct ListArticlesReducer: ReducerType {
     func reduce(with action: ListArticlesAction) {
         switch action {
         case .loadArticles:
-            guard state.articles.isEmpty else {
-                state.articles = []
-                return
-            }
-            
+            // TODO: Temporary until better organization
             let articleWorker: ArticleWorkerType = dependency.resolve()
             articleWorker.fetch(with: .init()) {
                 guard case .success(let value) = $0 else { return }
                 self.state.articles = value
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                    guard !self.state.articles.isEmpty else { return }
-                    self.state.articles.removeFirst()
-                }
             }
         case .clearArticles:
             state.articles = []
