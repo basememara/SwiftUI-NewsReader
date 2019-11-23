@@ -1,0 +1,14 @@
+//
+//  AppState.swift
+//  NewsReader iOS
+//
+//  Created by Basem Emara on 2019-11-20.
+//
+
+import Foundation
+import Combine
+import NewsCore
+
+class AppState: ObservableObject {
+    @Published var articles: [Article] = []
+}
