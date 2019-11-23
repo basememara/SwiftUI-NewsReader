@@ -24,12 +24,9 @@ struct ListArticlesView: View {
             .navigationBarItems(trailing:
                 Button(
                     action: {
-                        guard self.state.articles.isEmpty else {
-                            self.state.dispatch(.clearArticles)
-                            return
-                        }
-                        
-                        self.state.dispatch(.loadArticles)
+                        self.state.articles.isEmpty
+                            ? self.state.dispatch(.loadArticles)
+                            : self.state.dispatch(.clearArticles)
                     },
                     label: {
                         Text(self.state.articles.isEmpty ? "Load" : "Clear")
