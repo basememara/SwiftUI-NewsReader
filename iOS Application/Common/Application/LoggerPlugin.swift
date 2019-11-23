@@ -1,6 +1,6 @@
 //
 //  LoggerPlugin.swift
-//  NewsReader iOS
+//  NewsReader
 //
 //  Created by Basem Emara on 2019-11-21.
 //

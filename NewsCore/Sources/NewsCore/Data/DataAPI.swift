@@ -1,7 +1,7 @@
 //
-//  File.swift
+//  DataAPI.swift
+//  NewsCore
 //  
-//
 //  Created by Basem Emara on 2019-11-18.
 //
 

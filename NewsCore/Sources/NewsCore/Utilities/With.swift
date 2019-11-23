@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  With.swift
+//  NewsCCore
 //
 //  Created by Basem Emara on 2019-11-14.
 //

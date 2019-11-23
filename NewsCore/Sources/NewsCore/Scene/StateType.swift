@@ -1,9 +1,9 @@
 //
 //  StateType.swift
-//  NewsReader iOS
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-22.
 //
 
-/// The action component of the scene.
+/// The state of the scene.
 public protocol StateType {}

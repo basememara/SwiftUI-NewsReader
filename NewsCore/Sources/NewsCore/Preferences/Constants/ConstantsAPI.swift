@@ -1,10 +1,14 @@
 //
-//  ConstantsStoreInterfaces.swift
+//  ConstantsAPI.swift
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-18.
 //
 
 import Foundation
+
+// Namespace
+public enum ConstantsAPI {}
 
 public protocol ConstantsStore {
     var environment: Environment { get }

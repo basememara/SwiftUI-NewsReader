@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  ArticleWorkerTests.swift
+//  NewsCoreTests
 //
 //  Created by Basem Emara on 2019-11-17.
 //

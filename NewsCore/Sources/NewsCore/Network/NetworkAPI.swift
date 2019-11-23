@@ -1,13 +1,13 @@
 //
-//  File.swift
-//  
+//  NetworkAPI.swift
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-19.
 //
 
 import Foundation
 
-// Namespace for module
+// Namespace
 public enum NetworkAPI {}
 
 public protocol NetworkStore {

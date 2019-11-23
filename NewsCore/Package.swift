@@ -27,11 +27,11 @@ let package = Package(
             dependencies: ["NewsCore"]
         ),
         .testTarget(
-            name: "NewsCoreModelTests",
+            name: "NewsModelTests",
             dependencies: ["NewsCore"]
         ),
         .testTarget(
-            name: "NewsCoreUtilitiesTests",
+            name: "NewsUtilitiesTests",
             dependencies: ["NewsCore"]
         )
     ]

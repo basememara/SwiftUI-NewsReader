@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  DateFormatter.swift
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-17.
 //

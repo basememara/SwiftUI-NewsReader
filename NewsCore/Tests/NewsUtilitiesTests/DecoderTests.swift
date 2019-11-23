@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  DecodableTests.swift
+//  NewsUtilitiesTests
 //
 //  Created by Basem Emara on 2019-11-18.
 //

@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  ArticleWorker.swift
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-13.
 //

@@ -1,13 +1,13 @@
 //
-//  File.swift
-//  
+//  ArticleAPI.swift
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-13.
 //
 
 import Foundation
 
-/// Post request namespace
+/// Namespace
 public enum ArticleAPI {}
 
 public protocol ArticleWorkerType {

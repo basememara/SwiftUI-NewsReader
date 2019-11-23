@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  PreferencesTests.swift
+//  NewsCoreTests
 //
 //  Created by Basem Emara on 2019-11-18.
 //
@@ -27,8 +27,8 @@ extension PreferencesTests {
         
         XCTAssertEqual(preferences.get(.testString1), "abc")
         XCTAssertEqual(preferences.get(.testString2), "xyz")
-        XCTAssert(preferences.get(.testBool1))
-        XCTAssertFalse(preferences.get(.testBool2))
+        XCTAssert(preferences.get(.testBool1) ?? false)
+        XCTAssertFalse(preferences.get(.testBool2) ?? true)
         XCTAssertEqual(preferences.get(.testInt1), 123)
         XCTAssertEqual(preferences.get(.testInt2), 987)
         XCTAssertEqual(preferences.get(.testFloat1), 1.1)

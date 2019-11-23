@@ -1,3 +1,10 @@
+//
+//  ArticleModelTests.swift
+//  NewsModelTests
+//
+//  Created by Basem Emara on 2019-11-18.
+//
+
 import XCTest
 import NewsCore
 

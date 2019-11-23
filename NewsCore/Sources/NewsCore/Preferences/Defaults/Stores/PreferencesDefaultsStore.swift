@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  PreferencesDefaultsStore.swift
+//  NewCore
 //
 //  Created by Basem Emara on 2019-11-19.
 //

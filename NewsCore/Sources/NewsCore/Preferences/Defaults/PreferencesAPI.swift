@@ -1,10 +1,14 @@
 //
-//  String.Keys.swift
+//  PreferencesAPI.swift
+//  NewsCore
 //
 //  Created by Basem Emara on 2019-11-18.
 //
 
 import Foundation
+
+// Namespace
+public enum PreferencesAPI {}
 
 public protocol PreferencesStore {
     

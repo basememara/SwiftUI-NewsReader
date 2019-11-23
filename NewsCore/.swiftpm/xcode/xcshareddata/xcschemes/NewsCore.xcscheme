@@ -28,9 +28,9 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NewsCoreModelTests"
-               BuildableName = "NewsCoreModelTests"
-               BlueprintName = "NewsCoreModelTests"
+               BlueprintIdentifier = "NewsModelTests"
+               BuildableName = "NewsModelTests"
+               BlueprintName = "NewsModelTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NewsCoreUtilitiesTests"
-               BuildableName = "NewsCoreUtilitiesTests"
-               BlueprintName = "NewsCoreUtilitiesTests"
+               BlueprintIdentifier = "NewsUtilitiesTests"
+               BuildableName = "NewsUtilitiesTests"
+               BlueprintName = "NewsUtilitiesTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -70,9 +70,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NewsCoreModelTests"
-               BuildableName = "NewsCoreModelTests"
-               BlueprintName = "NewsCoreModelTests"
+               BlueprintIdentifier = "NewsModelTests"
+               BuildableName = "NewsModelTests"
+               BlueprintName = "NewsModelTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -80,9 +80,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NewsCoreUtilitiesTests"
-               BuildableName = "NewsCoreUtilitiesTests"
-               BlueprintName = "NewsCoreUtilitiesTests"
+               BlueprintIdentifier = "NewsUtilitiesTests"
+               BuildableName = "NewsUtilitiesTests"
+               BlueprintName = "NewsUtilitiesTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
