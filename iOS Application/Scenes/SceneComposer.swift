@@ -33,12 +33,10 @@ extension SceneComposer {
     
     func listArticles() -> some View {
         ListArticlesView(
-            state: ListArticlesState(
-                from: state,
-                with: ListArticlesReducer(
-                    state: state,
-                    articleWorker: dependency.resolve()
-                )
+            state: ListArticlesState(from: state),
+            action: ListArticlesAction(
+                on: state,
+                articleWorker: dependency.resolve()
             ),
             composer: ListArticlesComposer(from: self)
         )

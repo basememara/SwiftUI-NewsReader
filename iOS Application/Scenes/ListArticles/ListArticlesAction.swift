@@ -7,7 +7,33 @@
 
 import NewsCore
 
-enum ListArticlesAction {
-    case loadArticles
-    case clearArticles
+struct ListArticlesAction: ActionType {
+    private var state: AppState
+    private let articleWorker: ArticleWorkerType
+    
+    init(on state: AppState, articleWorker: ArticleWorkerType) {
+        self.state = state
+        self.articleWorker = articleWorker
+    }
+}
+
+extension ListArticlesAction {
+    
+    func loadArticles() {
+        articleWorker.fetch(with: .init()) {
+            guard case .success(let value) = $0 else {
+                // TODO: Handle error
+                return
+            }
+            
+            self.state.articles = value
+        }
+    }
+}
+
+extension ListArticlesAction {
+    
+    func clearArticles() {
+        state.articles = []
+    }
 }

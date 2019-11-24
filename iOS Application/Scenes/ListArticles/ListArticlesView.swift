@@ -11,6 +11,7 @@ import NewsCore
 struct ListArticlesView: View {
     @ObservedObject var state: ListArticlesState
     
+    let action: ListArticlesAction
     let composer: ListArticlesComposer
     
     var body: some View {
@@ -25,8 +26,8 @@ struct ListArticlesView: View {
                 Button(
                     action: {
                         self.state.articles.isEmpty
-                            ? self.state.dispatch(.loadArticles)
-                            : self.state.dispatch(.clearArticles)
+                            ? self.action.loadArticles()
+                            : self.action.clearArticles()
                     },
                     label: {
                         Text(self.state.articles.isEmpty ? "Load" : "Clear")
@@ -34,7 +35,7 @@ struct ListArticlesView: View {
                 )
             )
         }.onAppear {
-            self.state.dispatch(.loadArticles)
+            self.action.loadArticles()
         }
     }
 }
