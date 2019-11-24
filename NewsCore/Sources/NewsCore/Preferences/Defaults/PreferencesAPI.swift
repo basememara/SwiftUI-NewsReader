@@ -36,5 +36,5 @@ public protocol PreferencesType: PreferencesStore {}
 // MARK: - Subtypes
 
 extension String.Keys {
-    static let favorites = String.Key<[Int]?>("favorites")
+    static let favoriteArticles = String.Key<[String]?>("favoriteArticles")
 }

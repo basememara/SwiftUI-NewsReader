@@ -11,4 +11,5 @@ import NewsCore
 
 class AppState: ObservableObject {
     @Published var articles: [Article] = []
+    @Published var favorites: [String] = []
 }

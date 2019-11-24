@@ -22,9 +22,9 @@ class AppDelegate: ApplicationPluggableDelegate {
 // MARK: - Components / Injection
 
 private extension UIApplication {
-    private static var dependency = AppDependency()
-    private static var state = AppState()
-    private static var composer = SceneComposer(
+    private static let dependency = AppDependency()
+    private static let state = AppState()
+    private static let composer = SceneComposer(
         dependency: dependency,
         state: state
     )

@@ -43,14 +43,29 @@ extension SceneComposer {
     }
     
     func showArticle(for article: Article) -> some View {
-        ShowArticleView(article: article)
+        ShowArticleView(
+            state: ShowArticleState(
+                from: state,
+                for: article
+            ),
+            action: ShowArticleAction(
+                on: state,
+                favoriteWorker: dependency.resolve()
+            )
+        )
     }
 }
 
 extension SceneComposer {
     
     func listFavorites() -> some View {
-        ListFavoritesView()
+        ListFavoritesView(
+            state: ListFavoritesState(from: state),
+            action: ListFavoritesAction(
+                on: state,
+                favoriteWorker: dependency.resolve()
+            )
+        )
     }
 }
 

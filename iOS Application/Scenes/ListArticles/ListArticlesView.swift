@@ -15,26 +15,24 @@ struct ListArticlesView: View {
     let composer: ListArticlesComposer
     
     var body: some View {
-        NavigationView {
-            List(state.articles) { article in
-                NavigationLink(destination: self.composer.showArticle(for: article)) {
-                    Text(article.title)
-                }
+        List(state.articles) { article in
+            NavigationLink(destination: self.composer.showArticle(for: article)) {
+                Text(article.title).font(.body)
             }
-            .navigationBarTitle(Text("News"))
-            .navigationBarItems(trailing:
-                Button(
-                    action: {
-                        self.state.articles.isEmpty
-                            ? self.action.loadArticles()
-                            : self.action.clearArticles()
-                    },
-                    label: {
-                        Text(self.state.articles.isEmpty ? "Load" : "Clear")
-                    }
-                )
+        }
+        .navigationBarTitle(Text("News"))
+        .navigationBarItems(trailing:
+            Button(
+                action: {
+                    self.state.articles.isEmpty
+                        ? self.action.loadArticles()
+                        : self.action.clearArticles()
+                },
+                label: {
+                    Text(self.state.articles.isEmpty ? "Load" : "Clear").font(.body)
+                }
             )
-        }.onAppear {
+        ).onAppear {
             self.action.loadArticles()
         }
     }

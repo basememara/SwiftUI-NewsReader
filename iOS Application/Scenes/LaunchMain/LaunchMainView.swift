@@ -15,34 +15,38 @@ struct LaunchMainView: View {
     
     var body: some View {
         TabView(selection: $selectionTab) {
-            composer.listArticles()
-                .font(.title)
-                .tabItem({
-                    Image(systemName: "doc.text")
-                    Text("Latest")
-                })
-                .tag(Tab.latest)
-            composer.listFavorites()
-                .font(.title)
-                .tabItem({
-                    Image(systemName: "star.fill")
-                    Text("Favorites")
-                })
-                .tag(Tab.favorites)
-            composer.showProfile()
-                .font(.title)
-                .tabItem({
-                    Image(systemName: "person.fill")
-                    Text("Profile")
-                })
-                .tag(Tab.profile)
-            composer.showSettings()
-                .font(.title)
-                .tabItem({
-                    Image(systemName: "gear")
-                    Text("Settings")
-                })
-                .tag(Tab.settings)
+            NavigationView {
+                composer.listArticles()
+            }
+            .tabItem {
+                Image(systemName: "doc.text")
+                Text("Latest")
+            }
+            .tag(Tab.latest)
+            NavigationView {
+                composer.listFavorites()
+            }
+            .tabItem {
+                Image(systemName: "star.fill")
+                Text("Favorites")
+            }
+            .tag(Tab.favorites)
+            NavigationView {
+                composer.showProfile()
+            }
+            .tabItem {
+                Image(systemName: "person.fill")
+                Text("Profile")
+            }
+            .tag(Tab.profile)
+            NavigationView {
+                composer.showSettings()
+            }
+            .tabItem {
+                Image(systemName: "gear")
+                Text("Settings")
+            }
+            .tag(Tab.settings)
         }
     }
 }

@@ -26,6 +26,9 @@ public protocol NewsCoreDependency {
     func resolve() -> ArticleCache
     func resolve() -> ArticleRemote
     
+    func resolve() -> FavoriteWorkerType
+    func resolve() -> FavoriteStore
+    
     func resolve() -> NetworkServiceType
     func resolve() -> NetworkStore
     
@@ -115,6 +118,17 @@ public extension NewsCoreDependency {
             constants: resolve(),
             log: resolve()
         )
+    }
+}
+
+public extension NewsCoreDependency {
+    
+    func resolve() -> FavoriteWorkerType {
+        FavoriteWorker(store: resolve())
+    }
+    
+    func resolve() -> FavoriteStore {
+        FavoritePreferencesStore(preferences: resolve())
     }
 }
 

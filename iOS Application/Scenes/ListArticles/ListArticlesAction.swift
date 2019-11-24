@@ -37,3 +37,9 @@ extension ListArticlesAction {
         state.articles = []
     }
 }
+
+// TODO: Why does this runtime crash with `EXC_BAD_ACCESS`
+//extension AppState: ListArticlesReducerState {}
+//protocol ListArticlesReducerState: class {
+//    var articles: [Article] { get set }
+//}

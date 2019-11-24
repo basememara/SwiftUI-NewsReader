@@ -9,9 +9,17 @@ import SwiftUI
 import NewsCore
 
 struct ShowArticleView: View {
-    let article: Article
+    @ObservedObject var state: ShowArticleState
+    
+    let action: ShowArticleAction
     
     var body: some View {
-        Text(article.title)
+        Text(state.article.title)
+            .navigationBarTitle(Text("Favorites"))
+            .navigationBarItems(trailing:
+                Button(action: { self.action.toggleFavorite(id: self.state.article.id) }) {
+                    Text(state.isFavorite ? "Unfavorite" : "Favorite").font(.body)
+                }
+            )
     }
 }

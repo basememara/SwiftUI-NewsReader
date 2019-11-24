@@ -33,10 +33,10 @@ public extension Preferences {
 public extension PreferencesType {
     
     /// Returns the current favorite articles.
-    var favorites: [Int] { self.get(.favorites) ?? [] }
+    var favoriteArticles: [String] { self.get(.favoriteArticles) ?? [] }
     
     /// Removes all the user defaults items.
     func removeAll() {
-        remove(.favorites)
+        remove(.favoriteArticles)
     }
 }
