@@ -9,8 +9,8 @@ import NewsCore
 import Combine
 
 class ShowArticleState: StateType, ObservableObject {
-    @Published var article: Article
-    @Published var isFavorite: Bool
+    @Published private(set) var article: Article
+    @Published private(set) var isFavorite: Bool
     
     private var cancellable = Set<AnyCancellable>()
     

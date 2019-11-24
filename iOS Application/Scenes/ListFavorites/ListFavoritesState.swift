@@ -10,6 +10,7 @@ import Combine
 
 class ListFavoritesState: StateType, ObservableObject {
     @Published private(set) var favorites: [Article]
+    
     private var cancellable = Set<AnyCancellable>()
     
     init(from state: AppState) {

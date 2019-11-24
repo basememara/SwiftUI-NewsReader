@@ -10,21 +10,15 @@ import Combine
 
 class ListArticlesState: StateType, ObservableObject {
     @Published private(set) var articles: [Article]
-    @Published var favorites: [String]
     
     private var cancellable = Set<AnyCancellable>()
     
     init(from state: AppState) {
         self.articles = state.articles
-        self.favorites = state.favorites
         
         // Subscriptions
         state.$articles
             .assign(to: \Self.articles, on: self)
-            .store(in: &cancellable)
-        
-        state.$favorites
-            .assign(to: \Self.favorites, on: self)
             .store(in: &cancellable)
     }
 }
