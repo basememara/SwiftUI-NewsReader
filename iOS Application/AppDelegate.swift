@@ -10,13 +10,32 @@ import NewsCore
 
 @UIApplicationMain
 class AppDelegate: ApplicationPluggableDelegate {
-    let dependency = AppDependency()
-    let state = AppState()
     
     override func plugins() -> [ApplicationPlugin] {[
-        LoggerPlugin(log: dependency.resolve()),
-        DataPlugin(dataWorker: dependency.resolve()),
-        SchedulerPlugin(log: dependency.resolve()),
-        NotificationPlugin(log: dependency.resolve())
+        LoggerPlugin(log: UIApplication.shared.dependency.resolve()),
+        DataPlugin(dataWorker: UIApplication.shared.dependency.resolve()),
+        SchedulerPlugin(log: UIApplication.shared.dependency.resolve()),
+        NotificationPlugin(log: UIApplication.shared.dependency.resolve())
     ]}
+}
+
+// MARK: - Components / Injection
+
+private extension UIApplication {
+    private static var dependency = AppDependency()
+    private static var state = AppState()
+    private static var composer = SceneComposer(
+        dependency: dependency,
+        state: state
+    )
+    
+    var dependency: NewsCoreDependency { Self.dependency }
+    var state: AppState { Self.state }
+    var composer: SceneComposer { Self.composer }
+}
+
+extension UISceneDelegate {
+    var dependency: NewsCoreDependency { UIApplication.shared.dependency }
+    var state: AppState { UIApplication.shared.state }
+    var composer: SceneComposer { UIApplication.shared.composer }
 }

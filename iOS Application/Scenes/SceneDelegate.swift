@@ -14,14 +14,6 @@ class SceneDelegate: ScenePluggableDelegate {
     override func plugins() -> [ScenePlugin] {[
         LoggerPlugin(log: dependency.resolve()),
         SchedulerPlugin(log: dependency.resolve()),
-        WindowPlugin(for: self)
+        WindowPlugin(for: self, log: dependency.resolve())
     ]}
-}
-
-// MARK: - Inject
-
-extension ScenePluggableDelegate {
-    private var appDelegate: AppDelegate { UIApplication.shared.delegate as! AppDelegate }
-    var dependency: AppDependency { appDelegate.dependency }
-    var state: AppState { appDelegate.state }
 }

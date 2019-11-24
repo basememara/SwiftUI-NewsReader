@@ -9,21 +9,26 @@ import Foundation
 import NewsCore
 
 struct ListArticlesReducer: ReducerType {
-    private let dependency: AppDependency
     private var state: AppState
+    private let articleWorker: ArticleWorkerType
     
-    init(dependency: AppDependency, state: AppState) {
-        self.dependency = dependency
+    init(state: AppState, articleWorker: ArticleWorkerType) {
         self.state = state
+        self.articleWorker = articleWorker
     }
+}
+
+extension ListArticlesReducer {
     
     func reduce(with action: ListArticlesAction) {
         switch action {
         case .loadArticles:
-            // TODO: Temporary until better organization
-            let articleWorker: ArticleWorkerType = dependency.resolve()
             articleWorker.fetch(with: .init()) {
-                guard case .success(let value) = $0 else { return }
+                guard case .success(let value) = $0 else {
+                     // TODO: Handle error
+                    return
+                }
+                
                 self.state.articles = value
             }
         case .clearArticles:

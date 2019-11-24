@@ -11,10 +11,10 @@ import NewsCore
 
 /// Use to construct views centrally.
 struct SceneComposer {
-    private let dependency: AppDependency
+    private let dependency: NewsCoreDependency
     private let state: AppState
     
-    init(dependency: AppDependency, state: AppState) {
+    init(dependency: NewsCoreDependency, state: AppState) {
         self.dependency = dependency
         self.state = state
     }
@@ -36,8 +36,8 @@ extension SceneComposer {
             state: ListArticlesState(
                 from: state,
                 with: ListArticlesReducer(
-                    dependency: dependency,
-                    state: state
+                    state: state,
+                    articleWorker: dependency.resolve()
                 )
             ),
             composer: ListArticlesComposer(from: self)

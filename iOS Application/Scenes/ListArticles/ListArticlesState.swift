@@ -10,16 +10,15 @@ import Combine
 
 class ListArticlesState: StateType, ObservableObject {
     @Published private(set) var articles: [Article]
-    
-    private let reducer: ListArticlesReducer
     private var cancellable: AnyCancellable?
+
+    private let reducer: ListArticlesReducer
     
     init(from state: AppState, with reducer: ListArticlesReducer) {
         self.articles = state.articles
         self.reducer = reducer
         
-        // Subscribe to changes so subscriber refresh
-        self.cancellable = state.$articles
+        self.cancellable = state.$articles // Subscribe
             .assign(to: \Self.articles, on: self)
     }
 }

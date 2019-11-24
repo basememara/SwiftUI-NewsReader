@@ -11,16 +11,11 @@ import NewsCore
 
 final class WindowPlugin {
     private weak var delegate: ScenePluggableDelegate?
-    private let composer: SceneComposer
     private let log: LogWorkerType
     
-    init(for delegate: ScenePluggableDelegate) {
+    init(for delegate: ScenePluggableDelegate, log: LogWorkerType) {
         self.delegate = delegate
-        self.composer = SceneComposer(
-            dependency: delegate.dependency,
-            state: delegate.state
-        )
-        self.log = delegate.dependency.resolve()
+        self.log = log
     }
 }
 
@@ -37,14 +32,15 @@ extension WindowPlugin: ScenePlugin {
         
         // Handle deep link if applicable
         if let userActivity = connectionOptions.userActivities.first(where: { $0.activityType == NSUserActivityTypeBrowsingWeb }),
-            let webpageURL = userActivity.webpageURL {
-                log.info("Link passed to app: \(webpageURL.absoluteString)")
-                set(rootViewTo: composer.fetch(for: webpageURL))
-                return
+            let webpageURL = userActivity.webpageURL
+        {
+            log.info("Link passed to app: \(webpageURL.absoluteString)")
+            set(rootViewTo: delegate?.composer.fetch(for: webpageURL))
+            return
         }
         
         // Assign default view
-        set(rootViewTo: composer.launchMain())
+        set(rootViewTo: delegate?.composer.launchMain())
     }
 }
 
@@ -57,7 +53,7 @@ extension WindowPlugin {
         }
         
         log.info("Link passed to app: \(webpageURL.absoluteString)")
-        set(rootViewTo: composer.fetch(for: webpageURL))
+        set(rootViewTo: delegate?.composer.fetch(for: webpageURL))
     }
 }
 
