@@ -66,7 +66,14 @@ private extension LaunchMainView {
 #if DEBUG
 struct LaunchMainView_Previews: PreviewProvider {
     static var previews: some View {
-        composer.launchMain()
+        LaunchMainView(
+            composer: LaunchMainComposer(
+                from: SceneComposer(
+                    config: AppConfig(),
+                    state: AppState()
+                )
+            )
+        )
     }
 }
 #endif

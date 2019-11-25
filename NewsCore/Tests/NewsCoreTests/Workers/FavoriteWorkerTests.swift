@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class FavoriteWorkerTests: BaseTestCase {
-    private lazy var worker: FavoriteWorkerType = dependency.resolve()
+    private lazy var worker: FavoriteWorkerType = config.dependency()
 }
 
 extension FavoriteWorkerTests {

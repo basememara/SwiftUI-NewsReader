@@ -9,10 +9,10 @@ import XCTest
 import NewsCore
 
 class BaseTestCase: XCTestCase {
-    private lazy var dataWorker: DataWorkerType = dependency.resolve()
-    private lazy var preferences: PreferencesType = dependency.resolve()
+    private lazy var dataWorker: DataWorkerType = config.dependency()
+    private lazy var preferences: PreferencesType = config.dependency()
     
-    lazy var dependency: NewsCoreDependency = TestsDependency()
+    lazy var config: NewsCoreConfig = TestsConfig()
     
     override func setUp() {
         super.setUp()

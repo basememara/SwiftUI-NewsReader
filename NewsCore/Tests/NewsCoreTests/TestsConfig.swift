@@ -1,5 +1,5 @@
 //
-//  TestsDependency.swift
+//  TestsConfig.swift
 //  NewsCoreTests
 //
 //  Created by Basem Emara on 2019-11-18.
@@ -8,9 +8,9 @@
 import Foundation
 @testable import NewsCore
 
-struct TestsDependency: NewsCoreDependency {
+struct TestsConfig: NewsCoreConfig {
     
-    func resolveStore() -> ConstantsStore {
+    func dependencyStore() -> ConstantsStore {
         ConstantsMemoryStore(
             environment: .development,
             baseURL: URL(string: "https://newsapi.org")!,
@@ -26,27 +26,27 @@ struct TestsDependency: NewsCoreDependency {
         )
     }
     
-    func resolveStore() -> PreferencesStore {
+    func dependencyStore() -> PreferencesStore {
         PreferencesDefaultsStore(defaults: .test)
     }
     
-    func resolve() -> SeedStore {
+    func dependency() -> SeedStore {
         SeedJSONStore(
             jsonString: jsonString,
-            jsonDecoder: resolve()
+            jsonDecoder: dependency()
         )
     }
     
-    func resolve() -> [LogStore] {
+    func dependency() -> [LogStore] {
         [LogConsoleStore(minLevel: .verbose)]
     }
     
-    func resolve() -> Theme {
+    func dependency() -> Theme {
         fatalError("Not implemented")
     }
 }
 
-private extension TestsDependency {
+private extension TestsConfig {
     
     struct SeedJSONStore: SeedStore {
         private static var data: CorePayload?

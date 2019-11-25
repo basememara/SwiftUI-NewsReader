@@ -9,7 +9,10 @@ import Foundation
 import Combine
 import NewsCore
 
-class AppState: ObservableObject {
+class AppState: StateType, ObservableObject {
     @Published var articles: [Article] = []
     @Published var favorites: [String] = []
 }
+
+// Closure for mutating application state in reducers
+typealias MutateStateFunction = ((AppState) -> Void) -> Void

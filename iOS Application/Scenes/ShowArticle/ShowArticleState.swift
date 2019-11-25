@@ -14,14 +14,21 @@ class ShowArticleState: StateType, ObservableObject {
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(from state: AppState, for article: Article) {
+    init(from parent: AppState, article: Article) {
+        // Expose state through local properties
         self.article = article
-        self.isFavorite = state.favorites.contains(article.id)
+        self.isFavorite = parent.favorites.contains(article.id)
         
-        // Subscriptions
-        state.$favorites
+        // One-way binding for unidirectional flow
+        parent.$favorites
             .map { $0.contains(self.article.id) }
             .assign(to: \Self.isFavorite, on: self)
             .store(in: &cancellable)
+    }
+    
+    /// Non-reactive initializer for static state. Primarily used for previews and testing.
+    init(article: Article, isFavorite: Bool) {
+        self.article = article
+        self.isFavorite = isFavorite
     }
 }

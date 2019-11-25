@@ -11,11 +11,11 @@ import NewsCore
 
 /// Use to construct views centrally.
 struct SceneComposer {
-    private let dependency: NewsCoreDependency
+    private let config: NewsCoreConfig
     private let state: AppState
     
-    init(dependency: NewsCoreDependency, state: AppState) {
-        self.dependency = dependency
+    init(config: NewsCoreConfig, state: AppState) {
+        self.config = config
         self.state = state
     }
 }
@@ -32,26 +32,32 @@ extension SceneComposer {
 extension SceneComposer {
     
     func listArticles() -> some View {
-        ListArticlesView(
+        let reducer = ListArticlesReducer(
+            articleWorker: config.dependency()
+        )
+        
+        return ListArticlesView(
             state: ListArticlesState(from: state),
-            action: ListArticlesAction(
-                on: state,
-                articleWorker: dependency.resolve()
-            ),
+            dispatch: { action in
+                reducer.reduce(into: self.state, action)
+            },
             composer: ListArticlesComposer(from: self)
         )
     }
+}
+
+extension SceneComposer {
     
     func showArticle(for article: Article) -> some View {
-        ShowArticleView(
-            state: ShowArticleState(
-                from: state,
-                for: article
-            ),
-            action: ShowArticleAction(
-                on: state,
-                favoriteWorker: dependency.resolve()
-            )
+        let reducer = ShowArticleReducer(
+            favoriteWorker: config.dependency()
+        )
+        
+        return ShowArticleView(
+            state: ShowArticleState(from: state, article: article),
+            dispatch: { action in
+                reducer.reduce(into: self.state, action)
+            }
         )
     }
 }
@@ -59,12 +65,15 @@ extension SceneComposer {
 extension SceneComposer {
     
     func listFavorites() -> some View {
-        ListFavoritesView(
+        let reducer = ListFavoritesReducer(
+            favoriteWorker: config.dependency()
+        )
+        
+        return ListFavoritesView(
             state: ListFavoritesState(from: state),
-            action: ListFavoritesAction(
-                on: state,
-                favoriteWorker: dependency.resolve()
-            )
+            dispatch: { action in
+                reducer.reduce(into: self.state, action)
+            }
         )
     }
 }
@@ -90,16 +99,3 @@ extension SceneComposer {
         showArticle(for: state.articles.first(where: { $0.url == url.absoluteString })!)
     }
 }
-
-#if DEBUG
-extension PreviewProvider {
-    
-    /// Use for constructing previews.
-    static var composer: SceneComposer {
-        SceneComposer(
-            dependency: AppDependency(),
-            state: AppState()
-        )
-    }
-}
-#endif

@@ -9,12 +9,12 @@ import XCTest
 @testable import NewsCore
 
 final class DataWorkerTests: BaseTestCase {
-    private lazy var worker: DataWorkerType = dependency.resolve()
+    private lazy var worker: DataWorkerType = config.dependency()
     
     override func setUp() {
         super.setUp()
         
-        dependency = LocalDependency()
+        config = LocalConfig()
         worker.configure()
     }
 }
@@ -47,9 +47,9 @@ extension DataWorkerTests {
 
 private extension DataWorkerTests {
     
-    struct LocalDependency: NewsCoreDependency {
+    struct LocalConfig: NewsCoreConfig {
         
-        func resolveStore() -> ConstantsStore {
+        func dependencyStore() -> ConstantsStore {
             ConstantsMemoryStore(
                 environment: .development,
                 baseURL: URL(string: "https://example.com")!,
@@ -61,27 +61,27 @@ private extension DataWorkerTests {
             )
         }
         
-        func resolveStore() -> PreferencesStore {
+        func dependencyStore() -> PreferencesStore {
             PreferencesDefaultsStore(defaults: .test)
         }
         
-        func resolve() -> CacheStore {
+        func dependency() -> CacheStore {
             CacheStoreSpy()
         }
         
-        func resolve() -> SeedStore {
+        func dependency() -> SeedStore {
             SeedStoreSpy()
         }
         
-        func resolve() -> RemoteStore {
+        func dependency() -> RemoteStore {
             RemoteStoreSpy()
         }
         
-        func resolve() -> [LogStore] {
+        func dependency() -> [LogStore] {
             [LogConsoleStore(minLevel: .verbose)]
         }
         
-        func resolve() -> Theme {
+        func dependency() -> Theme {
             fatalError("Not implemented")
         }
     }

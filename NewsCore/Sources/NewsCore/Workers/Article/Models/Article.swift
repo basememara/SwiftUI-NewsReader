@@ -16,6 +16,28 @@ public struct Article {
     public let author: String?
     public let publishedAt: Date
     public let source: ArticleSource
+    
+    // MARK: - Initializers
+    
+    public init(
+        url: String,
+        title: String,
+        content: String?,
+        excerpt: String?,
+        image: String?,
+        author: String?,
+        publishedAt: Date,
+        source: ArticleSource
+    ) {
+        self.url = url
+        self.title = title
+        self.content = content
+        self.excerpt = excerpt
+        self.image = image
+        self.author = author
+        self.publishedAt = publishedAt
+        self.source = source
+    }
 }
 
 extension Article: Identifiable {

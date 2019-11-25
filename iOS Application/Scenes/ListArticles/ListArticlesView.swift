@@ -11,12 +11,12 @@ import NewsCore
 struct ListArticlesView: View {
     @ObservedObject var state: ListArticlesState
     
-    let action: ListArticlesAction
-    let composer: ListArticlesComposer
+    let dispatch: (ListArticlesAction) -> Void
+    let composer: ListArticlesComposer?
     
     var body: some View {
         List(state.articles) { article in
-            NavigationLink(destination: self.composer.showArticle(for: article)) {
+            NavigationLink(destination: self.composer?.showArticle(for: article)) {
                 Text(article.title).font(.body)
             }
         }
@@ -25,15 +25,15 @@ struct ListArticlesView: View {
             Button(
                 action: {
                     self.state.articles.isEmpty
-                        ? self.action.loadArticles()
-                        : self.action.clearArticles()
+                        ? self.dispatch(.loadArticles)
+                        : self.dispatch(.clearArticles)
                 },
                 label: {
                     Text(self.state.articles.isEmpty ? "Load" : "Clear").font(.body)
                 }
             )
         ).onAppear {
-            self.action.loadArticles()
+            self.dispatch(.loadArticles)
         }
     }
 }
@@ -41,7 +41,55 @@ struct ListArticlesView: View {
 #if DEBUG
 struct ListArticlesView_Previews: PreviewProvider {
     static var previews: some View {
-        composer.listArticles()
+        NavigationView {
+            ListArticlesView(
+                state: ListArticlesState(
+                    articles: [
+                        Article(
+                            url: "http://example.com/1",
+                            title: "Example article 1",
+                            content: "This is a test content for 1.",
+                            excerpt: "This is a test excecrpt",
+                            image: nil,
+                            author: nil,
+                            publishedAt: Date(),
+                            source: ArticleSource(
+                                id: "google-news",
+                                name: "Google News"
+                            )
+                        ),
+                        Article(
+                            url: "http://example.com/2",
+                            title: "Example article 2",
+                            content: "This is a test content for 1.",
+                            excerpt: "This is a test excecrpt",
+                            image: nil,
+                            author: nil,
+                            publishedAt: Date(),
+                            source: ArticleSource(
+                                id: "google-news",
+                                name: "Google News"
+                            )
+                        ),
+                        Article(
+                            url: "http://example.com/3",
+                            title: "Example article 3",
+                            content: "This is a test content for 1.",
+                            excerpt: "This is a test excecrpt",
+                            image: nil,
+                            author: nil,
+                            publishedAt: Date(),
+                            source: ArticleSource(
+                                id: "google-news",
+                                name: "Google News"
+                            )
+                        )
+                    ]
+                ),
+                dispatch: { _ in },
+                composer: nil
+            )
+        }
     }
 }
 #endif

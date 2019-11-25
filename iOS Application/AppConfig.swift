@@ -1,5 +1,5 @@
 //
-//  AppDependency.swift
+//  AppConfig.swift
 //  NewsReader
 //
 //  Created by Basem Emara on 2019-11-20.
@@ -8,7 +8,7 @@
 import Foundation
 import NewsCore
 
-struct AppDependency: NewsCoreDependency {
+struct AppConfig: NewsCoreConfig {
     private let environment: Environment
     
     init() {
@@ -19,7 +19,7 @@ struct AppDependency: NewsCoreDependency {
         #endif
     }
     
-    func resolveStore() -> ConstantsStore {
+    func dependencyStore() -> ConstantsStore {
         ConstantsMemoryStore(
             environment: environment,
             baseURL: URL(string: "https://newsapi.org")!,
@@ -52,7 +52,7 @@ struct AppDependency: NewsCoreDependency {
         )
     }
     
-    func resolveStore() -> PreferencesStore {
+    func dependencyStore() -> PreferencesStore {
         PreferencesDefaultsStore(
             defaults: {
                 UserDefaults(
@@ -69,16 +69,16 @@ struct AppDependency: NewsCoreDependency {
         )
     }
     
-    func resolve() -> SeedStore {
+    func dependency() -> SeedStore {
         SeedFileStore(
             forResource: "seed.json",
             inBundle: .main,
-            jsonDecoder: resolve()
+            jsonDecoder: dependency()
         )
     }
     
-    func resolve() -> [LogStore] {
-        let constants: ConstantsType = resolve()
+    func dependency() -> [LogStore] {
+        let constants: ConstantsType = dependency()
         
         return [
             LogConsoleStore(
@@ -93,7 +93,7 @@ struct AppDependency: NewsCoreDependency {
         ]
     }
     
-    func resolve() -> Theme {
+    func dependency() -> Theme {
         DefaultTheme()
     }
 }

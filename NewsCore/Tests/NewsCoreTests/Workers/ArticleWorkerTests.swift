@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class ArticleWorkerTests: BaseTestCase {
-    private lazy var worker: ArticleWorkerType = dependency.resolve()
+    private lazy var worker: ArticleWorkerType = config.dependency()
     
     // TODO: Create unit test
 }

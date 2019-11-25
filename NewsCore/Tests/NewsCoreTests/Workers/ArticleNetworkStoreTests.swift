@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class ArticleNetworkStoreTests: BaseTestCase {
-    private lazy var store: ArticleRemote = dependency.resolve()
+    private lazy var store: ArticleRemote = config.dependency()
 }
 
 extension ArticleNetworkStoreTests {
