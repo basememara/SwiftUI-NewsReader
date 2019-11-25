@@ -12,30 +12,27 @@ import NewsCore
 class AppDelegate: ApplicationPluggableDelegate {
     
     override func plugins() -> [ApplicationPlugin] {[
-        LoggerPlugin(log: UIApplication.shared.config.dependency()),
-        CachePlugin(
-            dataWorker: UIApplication.shared.config.dependency(),
-            log: UIApplication.shared.config.dependency()
-        )
+        LoggerPlugin(log: config.dependency()),
+        CachePlugin(dataWorker: config.dependency(), log: config.dependency())
     ]}
 }
 
-// MARK: - Dependency Injection
+// MARK: - Environment Components
 
 private extension UIApplication {
-    private static let config = AppConfig()
-    private static let state = AppState()
-    private static let composer = SceneComposer(
+    static let config = AppConfig()
+    static let state = AppState()
+    static let composer = SceneComposer(
         config: config,
         state: state
     )
-    
-    var config: NewsCoreConfig { Self.config }
-    var state: AppState { Self.state }
-    var composer: SceneComposer { Self.composer }
+}
+
+extension UIApplicationDelegate {
+    var config: NewsCoreConfig { UIApplication.config }
 }
 
 extension UISceneDelegate {
-    var config: NewsCoreConfig { UIApplication.shared.config }
-    var composer: SceneComposer { UIApplication.shared.composer }
+    var config: NewsCoreConfig { UIApplication.config }
+    var composer: SceneComposer { UIApplication.composer }
 }

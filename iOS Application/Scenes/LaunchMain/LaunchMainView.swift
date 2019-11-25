@@ -9,12 +9,12 @@ import SwiftUI
 import NewsCore
 
 struct LaunchMainView: View {
-    @State private var selectionTab = Tab.latest
+    @State private var selectedTab: Tab = .latest
 
     let composer: LaunchMainComposer
     
     var body: some View {
-        TabView(selection: $selectionTab) {
+        TabView(selection: $selectedTab) {
             NavigationView {
                 composer.listArticles()
             }

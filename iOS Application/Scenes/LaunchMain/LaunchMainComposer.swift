@@ -11,6 +11,13 @@ import NewsCore
 struct LaunchMainComposer {
     private let composer: SceneComposer
     
+    init(from composer: SceneComposer) {
+        self.composer = composer
+    }
+}
+
+extension LaunchMainComposer {
+    
     func listArticles() -> some View {
         composer.listArticles()
     }
@@ -25,12 +32,5 @@ struct LaunchMainComposer {
     
     func showSettings() -> some View {
         composer.showSettings()
-    }
-}
-
-extension LaunchMainComposer {
-    
-    init(from composer: SceneComposer) {
-        self.composer = composer
     }
 }
