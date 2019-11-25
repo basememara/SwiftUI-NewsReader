@@ -37,6 +37,5 @@ private extension UIApplication {
 
 extension UISceneDelegate {
     var config: NewsCoreConfig { UIApplication.shared.config }
-    var state: AppState { UIApplication.shared.state }
     var composer: SceneComposer { UIApplication.shared.composer }
 }
