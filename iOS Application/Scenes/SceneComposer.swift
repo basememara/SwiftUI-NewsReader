@@ -12,11 +12,11 @@ import NewsCore
 /// Use to construct views centrally.
 struct SceneComposer {
     private let config: NewsCoreConfig
-    private let state: AppState
+    private let store: AppStore
     
-    init(config: NewsCoreConfig, state: AppState) {
+    init(config: NewsCoreConfig, store: AppStore) {
         self.config = config
-        self.state = state
+        self.store = store
     }
 }
 
@@ -37,9 +37,9 @@ extension SceneComposer {
         )
         
         return ListArticlesView(
-            state: ListArticlesState(from: state),
+            state: ListArticlesState(from: store),
             dispatch: { action in
-                reducer.reduce(into: self.state, action)
+                reducer.reduce(into: self.store, action)
             },
             composer: ListArticlesComposer(from: self)
         )
@@ -54,9 +54,9 @@ extension SceneComposer {
         )
         
         return ShowArticleView(
-            state: ShowArticleState(from: state, article: article),
+            state: ShowArticleState(from: store, article: article),
             dispatch: { action in
-                reducer.reduce(into: self.state, action)
+                reducer.reduce(into: self.store, action)
             }
         )
     }
@@ -70,9 +70,9 @@ extension SceneComposer {
         )
         
         return ListFavoritesView(
-            state: ListFavoritesState(from: state),
+            state: ListFavoritesState(from: store),
             dispatch: { action in
-                reducer.reduce(into: self.state, action)
+                reducer.reduce(into: self.store, action)
             }
         )
     }
@@ -96,6 +96,6 @@ extension SceneComposer {
     
     func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap
-        showArticle(for: state.articles.first(where: { $0.url == url.absoluteString })!)
+        showArticle(for: store.articles.first(where: { $0.url == url.absoluteString })!)
     }
 }

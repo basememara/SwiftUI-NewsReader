@@ -14,13 +14,13 @@ class ShowArticleState: StateType, ObservableObject {
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(from parent: AppState, article: Article) {
-        // Expose state through local properties
+    init(from store: AppStore, article: Article) {
+        // Expose store through local properties
         self.article = article
-        self.isFavorite = parent.favorites.contains(article.id)
+        self.isFavorite = store.favorites.contains(article.id)
         
         // One-way binding for unidirectional flow
-        parent.$favorites
+        store.$favorites
             .map { $0.contains(self.article.id) }
             .assign(to: \Self.isFavorite, on: self)
             .store(in: &cancellable)

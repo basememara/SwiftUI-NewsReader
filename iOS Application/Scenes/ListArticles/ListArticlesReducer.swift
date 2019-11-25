@@ -17,27 +17,27 @@ struct ListArticlesReducer: ReducerType {
 
 extension ListArticlesReducer {
     
-    func reduce(into state: AppState, _ action: ListArticlesAction) {
+    func reduce(into store: AppStore, _ action: ListArticlesAction) {
         switch action {
         case .loadArticles:
-            loadArticles { $0(state) }
+            loadArticles { $0(store) }
         case .clearArticles:
-            clearArticles { $0(state) }
+            clearArticles { $0(store) }
         }
     }
 }
 
 private extension ListArticlesReducer {
     
-    func loadArticles(mutate state: @escaping MutateStateFunction) {
+    func loadArticles(mutate store: @escaping MutateStoreFunction) {
         articleWorker.fetch(with: .init()) {
             guard case .success(let value) = $0 else {
                 // TODO: Handle error
                 return
             }
             
-            // Mutate state since now complete
-            state {
+            // Mutate store since now complete
+            store {
                 $0.articles = value
             }
         }
@@ -46,8 +46,8 @@ private extension ListArticlesReducer {
 
 private extension ListArticlesReducer {
     
-    func clearArticles(mutate state: @escaping MutateStateFunction) {
-        state {
+    func clearArticles(mutate store: @escaping MutateStoreFunction) {
+        store {
             $0.articles = []
         }
     }

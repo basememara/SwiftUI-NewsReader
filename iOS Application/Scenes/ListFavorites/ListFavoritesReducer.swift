@@ -17,27 +17,27 @@ struct ListFavoritesReducer: ReducerType {
 
 extension ListFavoritesReducer {
     
-    func reduce(into state: AppState, _ action: ListFavoritesAction) {
+    func reduce(into store: AppStore, _ action: ListFavoritesAction) {
         switch action {
         case .loadFavorites:
-            loadFavorites { $0(state) }
+            loadFavorites { $0(store) }
         case .toggleFavorite(let id):
-            toggleFavorite(id: id) { $0(state) }
+            toggleFavorite(id: id) { $0(store) }
         }
     }
 }
 
 private extension ListFavoritesReducer {
     
-    func loadFavorites(mutate state: @escaping MutateStateFunction) {
+    func loadFavorites(mutate store: @escaping MutateStoreFunction) {
         favoriteWorker.fetchArticles {
             guard case .success(let value) = $0 else {
                 // TODO: Handle error
                 return
             }
             
-            // Mutate state since now complete
-            state {
+            // Mutate store since now complete
+            store {
                 $0.favorites = value
             }
         }
@@ -46,8 +46,8 @@ private extension ListFavoritesReducer {
 
 private extension ListFavoritesReducer {
     
-    func toggleFavorite(id: String, mutate state: @escaping MutateStateFunction) {
+    func toggleFavorite(id: String, mutate store: @escaping MutateStoreFunction) {
         favoriteWorker.toggleArticle(id: id)
-        loadFavorites(mutate: state) // TODO: Optimize
+        loadFavorites(mutate: store) // TODO: Optimize
     }
 }

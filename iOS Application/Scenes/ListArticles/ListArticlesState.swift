@@ -9,16 +9,16 @@ import NewsCore
 import Combine
 
 class ListArticlesState: StateType, ObservableObject {
-    @Published private(set) var articles: [Article]
+    @Published private(set) var articles: [Article] // Immutable from the outside
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(from parent: AppState) {
-        // Expose state through local properties
-        self.articles = parent.articles
+    init(from store: AppStore) {
+        // Expose store through local properties
+        self.articles = store.articles
         
         // One-way binding for unidirectional flow
-        parent.$articles
+        store.$articles
             .assign(to: \Self.articles, on: self)
             .store(in: &cancellable)
     }

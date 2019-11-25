@@ -9,20 +9,20 @@ import NewsCore
 import Combine
 
 class ListFavoritesState: StateType, ObservableObject {
-    @Published private(set) var favorites: [Article]
+    @Published private(set) var favorites: [Article] // Immutable from the outside
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(from state: AppState) {
-        self.favorites = state.articles
-            .filter { state.favorites.contains($0.id) }
+    init(from store: AppStore) {
+        self.favorites = store.articles
+            .filter { store.favorites.contains($0.id) }
         
         // One-way binding for unidirectional flow
-        state.$favorites
+        store.$favorites
             .map { value in
                 // TODO: Optimize lookup
                 value.compactMap { article in
-                    state.articles.first { $0.id == article }
+                    store.articles.first { $0.id == article }
                 }
             }
             .assign(to: \Self.favorites, on: self)

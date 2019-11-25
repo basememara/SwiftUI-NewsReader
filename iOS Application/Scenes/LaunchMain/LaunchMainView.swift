@@ -70,7 +70,7 @@ struct LaunchMainView_Previews: PreviewProvider {
             composer: LaunchMainComposer(
                 from: SceneComposer(
                     config: AppConfig(),
-                    state: AppState()
+                    store: AppStore()
                 )
             )
         )

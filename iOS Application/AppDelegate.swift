@@ -21,10 +21,10 @@ class AppDelegate: ApplicationPluggableDelegate {
 
 private extension UIApplication {
     static let config = AppConfig()
-    static let state = AppState()
+    static let store = AppStore()
     static let composer = SceneComposer(
         config: config,
-        state: state
+        store: store
     )
 }
 

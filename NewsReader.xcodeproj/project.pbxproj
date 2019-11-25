@@ -34,7 +34,7 @@
 		8BF857C22385EF5F0046FEC7 /* seed.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BF857C12385EF5F0046FEC7 /* seed.json */; };
 		8BF857C52385EFB20046FEC7 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857C42385EFB20046FEC7 /* DefaultTheme.swift */; };
 		8BF857C72385F00A0046FEC7 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BF857C62385F00A0046FEC7 /* Theme.xcassets */; };
-		8BF857C92386079D0046FEC7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857C82386079C0046FEC7 /* AppState.swift */; };
+		8BF857C92386079D0046FEC7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857C82386079C0046FEC7 /* AppStore.swift */; };
 		8BFB234523870CE70039EBEE /* LoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB234423870CE70039EBEE /* LoggerPlugin.swift */; };
 		8BFB234723870CF50039EBEE /* CachePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB234623870CF50039EBEE /* CachePlugin.swift */; };
 		8BFB234A23870D120039EBEE /* WindowPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB234923870D120039EBEE /* WindowPlugin.swift */; };
@@ -71,7 +71,7 @@
 		8BF857C12385EF5F0046FEC7 /* seed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed.json; sourceTree = "<group>"; };
 		8BF857C42385EFB20046FEC7 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		8BF857C62385F00A0046FEC7 /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
-		8BF857C82386079C0046FEC7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		8BF857C82386079C0046FEC7 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		8BFB234423870CE70039EBEE /* LoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerPlugin.swift; sourceTree = "<group>"; };
 		8BFB234623870CF50039EBEE /* CachePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePlugin.swift; sourceTree = "<group>"; };
 		8BFB234923870D120039EBEE /* WindowPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPlugin.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				8BF857BF2385EF480046FEC7 /* Common */,
 				8BF857AF2385CDA30046FEC7 /* Scenes */,
 				8BF857BC2385EE490046FEC7 /* AppConfig.swift */,
-				8BF857C82386079C0046FEC7 /* AppState.swift */,
+				8BF857C82386079C0046FEC7 /* AppStore.swift */,
 				8BF8579D2385CD470046FEC7 /* AppDelegate.swift */,
 				8BF857A32385CD4A0046FEC7 /* Assets.xcassets */,
 				8BB188B123863E5400ED6018 /* Supporting Files */,
@@ -347,7 +347,7 @@
 				8BF8579E2385CD470046FEC7 /* AppDelegate.swift in Sources */,
 				8BEFE55F2388F39E000508B5 /* ListArticlesAction.swift in Sources */,
 				8BCDF542238B681700FCC1F6 /* ListArticlesReducer.swift in Sources */,
-				8BF857C92386079D0046FEC7 /* AppState.swift in Sources */,
+				8BF857C92386079D0046FEC7 /* AppStore.swift in Sources */,
 				8BCDF53E238B15BE00FCC1F6 /* ShowArticleAction.swift in Sources */,
 				8B051351238A5D3E00CD0C66 /* ListFavoritesState.swift in Sources */,
 				8BB188BC23864CC800ED6018 /* ShowSettingsView.swift in Sources */,
