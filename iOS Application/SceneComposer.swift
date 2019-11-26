@@ -5,11 +5,10 @@
 //  Created by Basem Emara on 2019-11-21.
 //
 
-import Foundation
-import SwiftUI
 import NewsCore
+import SwiftUI
 
-/// Use to construct views centrally.
+/// Root composer used to construct all views.
 struct SceneComposer {
     private let core: NewsCore
     private let store: AppStore
@@ -24,6 +23,7 @@ extension SceneComposer {
     
     func launchMain() -> some View {
         LaunchMainView(
+            // Expose only some of the composer by wrapping it
             composer: LaunchMainComposer(from: self)
         )
     }
@@ -37,8 +37,11 @@ extension SceneComposer {
         )
         
         return ListArticlesView(
+            // Expose only some of the store by wrapping it
             state: ListArticlesState(from: store),
+            // Views use it to dispatch actions to the reducer
             dispatch: { action in
+                // Instead of giving the entire store to views
                 reducer.reduce(into: self.store, action)
             },
             composer: ListArticlesComposer(from: self)

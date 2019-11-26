@@ -5,14 +5,13 @@
 //  Created by Basem Emara on 2019-11-20.
 //
 
-import Foundation
 import Combine
 import NewsCore
 
-class AppStore: StateType, ObservableObject {
+/// Global store for the application.
+///
+/// Only update on main thread since views are observing changes.
+class AppStore: StoreType, ObservableObject {
     @Published var articles: [Article] = []
     @Published var favorites: [String] = []
 }
-
-// Closure for mutating application store in reducers
-typealias MutateStoreFunction = ((AppStore) -> Void) -> Void

@@ -11,7 +11,7 @@ import NewsCore
 struct ListFavoritesView: View {
     @ObservedObject var state: ListFavoritesState
     
-    let dispatch: (ListFavoritesAction) -> Void
+    let dispatch: Dispatcher<ListFavoritesAction>
     
     var body: some View {
         

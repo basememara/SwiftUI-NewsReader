@@ -10,8 +10,8 @@ import NewsCore
 
 struct ListArticlesView: View {
     @ObservedObject var state: ListArticlesState
-    
-    let dispatch: (ListArticlesAction) -> Void
+
+    let dispatch: Dispatcher<ListArticlesAction>
     let composer: ListArticlesComposer?
     
     var body: some View {

@@ -11,7 +11,7 @@ import NewsCore
 struct ShowArticleView: View {
     @ObservedObject var state: ShowArticleState
     
-    let dispatch: (ShowArticleAction) -> Void
+    let dispatch: Dispatcher<ShowArticleAction>
     
     var body: some View {
         Text(state.article.title)
