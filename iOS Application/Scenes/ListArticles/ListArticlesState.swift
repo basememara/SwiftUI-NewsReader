@@ -27,7 +27,7 @@ class ListArticlesState: StateType, ObservableObject {
     }
     
     /// Non-reactive initializer for static state. Primarily used for previews and testing.
-    init(articles: [Article]) {
-        self.articles = articles
+    init(model: [Article]) {
+        self.articles = model
     }
 }

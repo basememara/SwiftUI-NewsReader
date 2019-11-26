@@ -14,13 +14,38 @@ struct ShowArticleView: View {
     let dispatch: Dispatcher<ShowArticleAction>
     
     var body: some View {
-        Text(state.article.title)
-            .navigationBarTitle(Text("Article"))
-            .navigationBarItems(trailing:
-                Button(action: { self.dispatch(.toggleFavorite(id: self.state.article.id)) }) {
-                    Text(state.isFavorite ? "Unfavorite" : "Favorite").font(.body)
+        Form {
+            Section {
+                Text(state.article.title)
+                TextField("Text", text: $state.text)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                Stepper(value: $state.quantity, in: 0...10) {
+                    Text("Quantity")
                 }
-            )
+            }
+            Section {
+                DatePicker(selection: $state.date) {
+                    Text("Published Date")
+                }
+                Picker(
+                    selection: $state.selection,
+                    label: Text("Picker Name"),
+                    content: {
+                        Text("Value 1").tag(0)
+                        Text("Value 2").tag(1)
+                        Text("Value 3").tag(2)
+                        Text("Value 4").tag(3)
+                    }
+                )
+            }
+        }
+        .navigationBarTitle(Text("Article"))
+        .navigationBarItems(trailing:
+            Button(action: { self.dispatch(.toggleFavorite(id: self.state.article.id)) }) {
+                Text(state.isFavorite ? "Unfavorite" : "Favorite").font(.body)
+            }
+        )
     }
 }
 
@@ -30,7 +55,7 @@ struct ShowArticleView_Previews: PreviewProvider {
         NavigationView {
             ShowArticleView(
                 state: ShowArticleState(
-                    article: Article(
+                    model: Article(
                         url: "http://example.com/1",
                         title: "Example article 1",
                         content: "This is a test content for 1.",
@@ -43,7 +68,11 @@ struct ShowArticleView_Previews: PreviewProvider {
                             name: "Google News"
                         )
                     ),
-                    isFavorite: false
+                    isFavorite: false,
+                    text: "Test string",
+                    date: Date(),
+                    quantity: 99,
+                    selection: "Value 1"
                 ),
                 dispatch: { _ in }
             )

@@ -10,14 +10,18 @@ import NewsCore
 
 struct ListArticlesView: View {
     @ObservedObject var state: ListArticlesState
-
+    
     let dispatch: Dispatcher<ListArticlesAction>
     let composer: ListArticlesComposer?
     
     var body: some View {
-        List(state.articles) { article in
-            NavigationLink(destination: self.composer?.showArticle(for: article)) {
-                Text(article.title).font(.body)
+        List(state.articles) { model in
+            NavigationLink(
+                destination: self.render?
+                    .showArticle(model)
+            ) {
+                Text(model.title)
+                    .font(.body)
             }
         }
         .navigationBarTitle(Text("News"))
@@ -44,7 +48,7 @@ struct ListArticlesView_Previews: PreviewProvider {
         NavigationView {
             ListArticlesView(
                 state: ListArticlesState(
-                    articles: [
+                    model: [
                         Article(
                             url: "http://example.com/1",
                             title: "Example article 1",
@@ -86,8 +90,6 @@ struct ListArticlesView_Previews: PreviewProvider {
                         )
                     ]
                 ),
-                dispatch: { _ in },
-                composer: nil
             )
         }
     }

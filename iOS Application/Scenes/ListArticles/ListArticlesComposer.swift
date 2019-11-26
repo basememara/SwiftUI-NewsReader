@@ -18,7 +18,7 @@ struct ListArticlesComposer: ComposerType {
 
 extension ListArticlesComposer {
     
-    func showArticle(for article: Article) -> some View {
-        composer.showArticle(for: article)
+    func showArticle(_ model: Article) -> some View {
+        composer.showArticle(model)
     }
 }

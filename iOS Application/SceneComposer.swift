@@ -51,13 +51,20 @@ extension SceneComposer {
 
 extension SceneComposer {
     
-    func showArticle(for article: Article) -> some View {
+    func showArticle(_ model: Article) -> some View {
         let reducer = ShowArticleReducer(
             favoriteWorker: core.dependency()
         )
         
         return ShowArticleView(
-            state: ShowArticleState(from: store, article: article),
+            state: ShowArticleState(
+                from: store,
+                model: model,
+                text: "Test string",
+                date: Date(),
+                quantity: 99,
+                selection: "Value 1"
+            ),
             dispatch: { action in
                 reducer.reduce(into: self.store, action)
             }
@@ -99,6 +106,6 @@ extension SceneComposer {
     
     func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap
-        showArticle(for: store.articles.first(where: { $0.url == url.absoluteString })!)
+        showArticle(store.articles.first(where: { $0.url == url.absoluteString })!)
     }
 }
