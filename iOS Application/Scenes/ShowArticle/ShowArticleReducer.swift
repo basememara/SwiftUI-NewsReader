@@ -15,6 +15,8 @@ struct ShowArticleReducer: ReducerType {
     }
 }
 
+// MARK: - Dispatcher
+
 extension ShowArticleReducer {
     
     func reduce(into store: AppStore, _ action: ShowArticleAction) {
@@ -24,6 +26,8 @@ extension ShowArticleReducer {
         }
     }
 }
+
+// MARK: - Logic
 
 private extension ShowArticleReducer {
     

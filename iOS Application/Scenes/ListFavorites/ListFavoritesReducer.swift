@@ -15,6 +15,8 @@ struct ListFavoritesReducer: ReducerType {
     }
 }
 
+// MARK: - Dispatcher
+
 extension ListFavoritesReducer {
     
     func reduce(into store: AppStore, _ action: ListFavoritesAction) {
@@ -26,6 +28,8 @@ extension ListFavoritesReducer {
         }
     }
 }
+
+// MARK: - Logic
 
 private extension ListFavoritesReducer {
     

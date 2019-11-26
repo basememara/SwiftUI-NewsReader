@@ -9,9 +9,12 @@ import NewsCore
 import Combine
 
 class ListArticlesState: StateType, ObservableObject {
-    @Published private(set) var articles: [Article] // Immutable from the outside
+    // Immutable from the outside
+    @Published private(set) var articles: [Article]
     
     private var cancellable = Set<AnyCancellable>()
+    
+    // MARK: - Setup
     
     init(from store: AppStore) {
         // Expose store through local properties

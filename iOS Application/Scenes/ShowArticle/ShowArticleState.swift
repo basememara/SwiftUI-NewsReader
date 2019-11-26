@@ -9,10 +9,13 @@ import NewsCore
 import Combine
 
 class ShowArticleState: StateType, ObservableObject {
+    // Immutable from the outside
     @Published private(set) var article: Article
     @Published private(set) var isFavorite: Bool
     
     private var cancellable = Set<AnyCancellable>()
+    
+    // MARK: - Setup
     
     init(from store: AppStore, article: Article) {
         // Expose store through local properties

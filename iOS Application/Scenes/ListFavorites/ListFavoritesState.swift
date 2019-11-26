@@ -9,9 +9,12 @@ import NewsCore
 import Combine
 
 class ListFavoritesState: StateType, ObservableObject {
-    @Published private(set) var favorites: [Article] // Immutable from the outside
+    // Immutable from the outside
+    @Published private(set) var favorites: [Article]
     
     private var cancellable = Set<AnyCancellable>()
+    
+    // MARK: - Setup
     
     init(from store: AppStore) {
         self.favorites = store.articles

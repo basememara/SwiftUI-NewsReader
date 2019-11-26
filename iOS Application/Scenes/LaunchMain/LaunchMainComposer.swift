@@ -8,7 +8,7 @@
 import SwiftUI
 import NewsCore
 
-struct LaunchMainComposer {
+struct LaunchMainComposer: ComposerType {
     private let composer: SceneComposer
     
     init(from composer: SceneComposer) {
