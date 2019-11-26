@@ -5,9 +5,9 @@
 //  Created by Basem Emara on 2019-11-13.
 //
 
+import UIKit
 import NewsCore
 import SwiftUI
-import UIKit
 
 class SceneDelegate: ScenePluggableDelegate {
     

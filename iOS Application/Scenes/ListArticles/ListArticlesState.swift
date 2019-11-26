@@ -5,8 +5,8 @@
 //  Created by Basem Emara on 2019-11-22.
 //
 
-import NewsCore
 import Combine
+import NewsCore
 
 class ListArticlesState: StateType, ObservableObject {
     // Immutable from the outside

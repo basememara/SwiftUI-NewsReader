@@ -5,8 +5,8 @@
 //  Created by Basem Emara on 2019-11-24.
 //
 
-import NewsCore
 import Combine
+import NewsCore
 
 class ShowArticleState: StateType, ObservableObject {
     // Immutable from the outside
