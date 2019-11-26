@@ -33,7 +33,7 @@ class ListFavoritesState: StateType, ObservableObject {
     }
     
     /// Non-reactive initializer for static state. Primarily used for previews and testing.
-    init(favorites: [Article]) {
-        self.favorites = favorites
+    init(model: [Article]) {
+        self.favorites = model
     }
 }

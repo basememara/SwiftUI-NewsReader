@@ -1,5 +1,5 @@
 //
-//  SceneComposer.swift
+//  SceneRender.swift
 //  NewsReader
 //
 //  Created by Basem Emara on 2019-11-21.
@@ -9,7 +9,7 @@ import NewsCore
 import SwiftUI
 
 /// Root composer used to construct all views.
-struct SceneComposer {
+struct SceneRender {
     private let core: NewsCore
     private let store: AppStore
     
@@ -19,17 +19,17 @@ struct SceneComposer {
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func launchMain() -> some View {
         LaunchMainView(
             // Expose only some of the composer by wrapping it
-            composer: LaunchMainComposer(from: self)
+            render: LaunchMainRender(from: self)
         )
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func listArticles() -> some View {
         let reducer = ListArticlesReducer(
@@ -40,16 +40,16 @@ extension SceneComposer {
             // Expose only some of the store by wrapping it
             state: ListArticlesState(from: store),
             // Views use it to dispatch actions to the reducer
-            dispatch: { action in
+            dispatch: { action in // TODO: Extract to property wrapper
                 // Instead of giving the entire store to views
                 reducer.reduce(into: self.store, action)
             },
-            composer: ListArticlesComposer(from: self)
+            render: ListArticlesRender(from: self)
         )
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func showArticle(_ model: Article) -> some View {
         let reducer = ShowArticleReducer(
@@ -72,7 +72,7 @@ extension SceneComposer {
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func listFavorites() -> some View {
         let reducer = ListFavoritesReducer(
@@ -88,21 +88,21 @@ extension SceneComposer {
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func showProfile() -> some View {
         ShowProfileView()
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func showSettings() -> some View {
         ShowSettingsView()
     }
 }
 
-extension SceneComposer {
+extension SceneRender {
     
     func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap

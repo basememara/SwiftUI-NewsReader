@@ -11,12 +11,12 @@ import NewsCore
 struct LaunchMainView: View {
     @State private var selectedTab: Tab = .latest
 
-    let composer: LaunchMainComposer
+    let render: LaunchMainRender
     
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationView {
-                composer.listArticles()
+                render.listArticles()
             }
             .tabItem {
                 Image(systemName: "doc.text")
@@ -24,7 +24,7 @@ struct LaunchMainView: View {
             }
             .tag(Tab.latest)
             NavigationView {
-                composer.listFavorites()
+                render.listFavorites()
             }
             .tabItem {
                 Image(systemName: "star.fill")
@@ -32,7 +32,7 @@ struct LaunchMainView: View {
             }
             .tag(Tab.favorites)
             NavigationView {
-                composer.showProfile()
+                render.showProfile()
             }
             .tabItem {
                 Image(systemName: "person.fill")
@@ -40,7 +40,7 @@ struct LaunchMainView: View {
             }
             .tag(Tab.profile)
             NavigationView {
-                composer.showSettings()
+                render.showSettings()
             }
             .tabItem {
                 Image(systemName: "gear")
@@ -67,8 +67,8 @@ private extension LaunchMainView {
 struct LaunchMainView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchMainView(
-            composer: LaunchMainComposer(
-                from: SceneComposer(
+            render: LaunchMainRender(
+                from: SceneRender(
                     core: AppCore(),
                     store: AppStore()
                 )

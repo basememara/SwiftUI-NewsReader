@@ -41,7 +41,7 @@ struct ListFavoritesView_Previews: PreviewProvider {
         NavigationView {
             ListFavoritesView(
                 state: ListFavoritesState(
-                    favorites: [
+                    model: [
                         Article(
                             url: "http://example.com/1",
                             title: "Example article 1",
@@ -83,7 +83,9 @@ struct ListFavoritesView_Previews: PreviewProvider {
                         )
                     ]
                 ),
-                dispatch: { _ in }
+                dispatch: {
+                    print("Action: \($0)")
+                }
             )
         }
     }

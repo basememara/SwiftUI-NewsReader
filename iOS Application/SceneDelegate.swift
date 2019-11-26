@@ -11,8 +11,8 @@ import SwiftUI
 
 class SceneDelegate: ScenePluggableDelegate {
     
-    /// Root builder for all scenes. Create views only through scene composers.
-    private lazy var composer = SceneComposer(
+    /// Root builder for all scenes. Create views only through scene renders.
+    private lazy var render = SceneRender(
         core: core,
         store: store
     )
@@ -41,12 +41,12 @@ extension SceneDelegate {
             let webpageURL = userActivity.webpageURL
         {
             log.info("Link passed to app: \(webpageURL.absoluteString)")
-            set(rootViewTo: composer.fetch(for: webpageURL))
+            set(rootViewTo: render.fetch(for: webpageURL))
             return
         }
         
         // Assign default view
-        set(rootViewTo: composer.launchMain())
+        set(rootViewTo: render.launchMain())
     }
 }
 
@@ -61,7 +61,7 @@ extension SceneDelegate {
         }
         
         log.info("Link passed to app: \(webpageURL.absoluteString)")
-        set(rootViewTo: composer.fetch(for: webpageURL))
+        set(rootViewTo: render.fetch(for: webpageURL))
     }
 }
 

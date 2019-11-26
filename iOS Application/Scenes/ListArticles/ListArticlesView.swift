@@ -12,7 +12,7 @@ struct ListArticlesView: View {
     @ObservedObject var state: ListArticlesState
     
     let dispatch: Dispatcher<ListArticlesAction>
-    let composer: ListArticlesComposer?
+    let render: ListArticlesRender?
     
     var body: some View {
         List(state.articles) { model in
@@ -90,6 +90,10 @@ struct ListArticlesView_Previews: PreviewProvider {
                         )
                     ]
                 ),
+                dispatch: {
+                    print("Action: \($0)")
+                },
+                render: nil
             )
         }
     }
