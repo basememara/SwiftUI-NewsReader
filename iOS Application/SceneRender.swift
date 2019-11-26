@@ -12,10 +12,12 @@ import SwiftUI
 struct SceneRender {
     private let core: NewsCore
     private let store: AppStore
+    private let middleware: [MiddlewareType]
     
-    init(core: NewsCore, store: AppStore) {
+    init(core: NewsCore, store: AppStore, middleware: [MiddlewareType]) {
         self.core = core
         self.store = store
+        self.middleware = middleware
     }
 }
 
@@ -41,6 +43,9 @@ extension SceneRender {
             state: ListArticlesState(parent: store),
             // Views use it to dispatch actions to the reducer
             dispatch: { action in // TODO: Extract to property wrapper
+                // Allow middleware to passively execute against action
+                self.middleware.forEach { $0.execute(on: action) }
+                
                 // Closure captures store instead of coupling store to views
                 reducer.apply(self.store, action)
             },
@@ -66,6 +71,7 @@ extension SceneRender {
             quantity: 99,
             selection: "Value 1",
             dispatch: { action in
+                self.middleware.forEach { $0.execute(on: action) }
                 reducer.apply(self.store, action)
             }
         )
@@ -82,6 +88,7 @@ extension SceneRender {
         return ListFavoritesView(
             state: ListFavoritesState(parent: store),
             dispatch: { action in
+                self.middleware.forEach { $0.execute(on: action) }
                 reducer.apply(self.store, action)
             }
         )

@@ -14,7 +14,10 @@ class SceneDelegate: ScenePluggableDelegate {
     /// Root builder for all scenes. Create views only through scene renders.
     private lazy var render = SceneRender(
         core: core,
-        store: store
+        store: store,
+        middleware: [
+            TestMiddleware()
+        ]
     )
     
     private lazy var log: LogWorkerType = core.dependency()

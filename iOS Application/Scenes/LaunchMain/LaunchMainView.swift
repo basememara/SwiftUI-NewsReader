@@ -70,7 +70,8 @@ struct LaunchMainView_Previews: PreviewProvider {
             render: LaunchMainRender(
                 parent: SceneRender(
                     core: AppCore(),
-                    store: AppStore()
+                    store: AppStore(),
+                    middleware: []
                 )
             )
         )

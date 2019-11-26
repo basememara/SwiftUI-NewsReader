@@ -15,6 +15,8 @@
 		8B70D68F238CCF040082CD15 /* StateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70D68B238CCF040082CD15 /* StateType.swift */; };
 		8B70D690238CCF040082CD15 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70D68C238CCF040082CD15 /* ActionType.swift */; };
 		8B70D692238CCF800082CD15 /* StoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70D691238CCF800082CD15 /* StoreType.swift */; };
+		8B70D696238D80730082CD15 /* MiddlewareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70D695238D80730082CD15 /* MiddlewareType.swift */; };
+		8B70D69A238D9CD50082CD15 /* TestMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70D699238D9CD50082CD15 /* TestMiddleware.swift */; };
 		8BB188B323864C2F00ED6018 /* ListArticlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB188B223864C2F00ED6018 /* ListArticlesView.swift */; };
 		8BB188B623864CB200ED6018 /* ShowProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB188B523864CB200ED6018 /* ShowProfileView.swift */; };
 		8BB188B823864CBE00ED6018 /* ShowArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB188B723864CBE00ED6018 /* ShowArticleView.swift */; };
@@ -54,6 +56,8 @@
 		8B70D68B238CCF040082CD15 /* StateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateType.swift; sourceTree = "<group>"; };
 		8B70D68C238CCF040082CD15 /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		8B70D691238CCF800082CD15 /* StoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreType.swift; sourceTree = "<group>"; };
+		8B70D695238D80730082CD15 /* MiddlewareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddlewareType.swift; sourceTree = "<group>"; };
+		8B70D699238D9CD50082CD15 /* TestMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMiddleware.swift; sourceTree = "<group>"; };
 		8BB188B223864C2F00ED6018 /* ListArticlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListArticlesView.swift; sourceTree = "<group>"; };
 		8BB188B523864CB200ED6018 /* ShowProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowProfileView.swift; sourceTree = "<group>"; };
 		8BB188B723864CBE00ED6018 /* ShowArticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowArticleView.swift; sourceTree = "<group>"; };
@@ -116,6 +120,23 @@
 			path = LaunchMain;
 			sourceTree = "<group>";
 		};
+		8B70D697238D9CBD0082CD15 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				8BFB234623870CF50039EBEE /* CachePlugin.swift */,
+				8BFB234423870CE70039EBEE /* LoggerPlugin.swift */,
+			);
+			path = Plugins;
+			sourceTree = "<group>";
+		};
+		8B70D698238D9CC30082CD15 /* Middleware */ = {
+			isa = PBXGroup;
+			children = (
+				8B70D699238D9CD50082CD15 /* TestMiddleware.swift */,
+			);
+			path = Middleware;
+			sourceTree = "<group>";
+		};
 		8BB188B123863E5400ED6018 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				8B70D68C238CCF040082CD15 /* ActionType.swift */,
+				8B70D695238D80730082CD15 /* MiddlewareType.swift */,
 				8B70D68A238CCF040082CD15 /* ReducerType.swift */,
 				8B70D689238CCF040082CD15 /* RenderType.swift */,
 				8B70D68B238CCF040082CD15 /* StateType.swift */,
@@ -272,8 +294,8 @@
 		8BFB234123870CBA0039EBEE /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				8BFB234623870CF50039EBEE /* CachePlugin.swift */,
-				8BFB234423870CE70039EBEE /* LoggerPlugin.swift */,
+				8B70D697238D9CBD0082CD15 /* Plugins */,
+				8B70D698238D9CC30082CD15 /* Middleware */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -356,6 +378,7 @@
 				8BFB234723870CF50039EBEE /* CachePlugin.swift in Sources */,
 				8BEFE5602388F39E000508B5 /* ListArticlesState.swift in Sources */,
 				8BF857B82385CDA30046FEC7 /* SceneDelegate.swift in Sources */,
+				8B70D696238D80730082CD15 /* MiddlewareType.swift in Sources */,
 				8BCDF544238C076C00FCC1F6 /* ShowArticleReducer.swift in Sources */,
 				8BB188B823864CBE00ED6018 /* ShowArticleView.swift in Sources */,
 				8B70D692238CCF800082CD15 /* StoreType.swift in Sources */,
@@ -365,6 +388,7 @@
 				8BEFE55A2388F390000508B5 /* LaunchMainRender.swift in Sources */,
 				8BF857BD2385EE490046FEC7 /* AppCore.swift in Sources */,
 				8BEFE5622388F39E000508B5 /* ListArticlesRender.swift in Sources */,
+				8B70D69A238D9CD50082CD15 /* TestMiddleware.swift in Sources */,
 				8BF8579E2385CD470046FEC7 /* AppDelegate.swift in Sources */,
 				8BEFE55F2388F39E000508B5 /* ListArticlesAction.swift in Sources */,
 				8BCDF542238B681700FCC1F6 /* ListArticlesReducer.swift in Sources */,
