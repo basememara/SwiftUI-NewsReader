@@ -9,16 +9,16 @@ import NewsCore
 import SwiftUI
 
 struct ListArticlesRender: RenderType {
-    private let render: SceneRender
+    private let parent: SceneRender
     
-    init(from render: SceneRender) {
-        self.render = render
+    init(parent: SceneRender) {
+        self.parent = parent
     }
 }
 
 extension ListArticlesRender {
     
     func showArticle(_ model: Article) -> some View {
-        render.showArticle(model)
+        parent.showArticle(model)
     }
 }

@@ -8,6 +8,7 @@
 import Combine
 import NewsCore
 
+/// Sub-state instead of exposing entire root store to view.
 class ListArticlesState: StateType, ObservableObject {
     // Immutable from the outside
     @Published private(set) var articles: [Article]
@@ -16,7 +17,7 @@ class ListArticlesState: StateType, ObservableObject {
     
     // MARK: - Setup
     
-    init(from store: AppStore) {
+    init(parent store: AppStore) {
         // Expose store through local properties
         self.articles = store.articles
         

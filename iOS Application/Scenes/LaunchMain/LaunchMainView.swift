@@ -68,7 +68,7 @@ struct LaunchMainView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchMainView(
             render: LaunchMainRender(
-                from: SceneRender(
+                parent: SceneRender(
                     core: AppCore(),
                     store: AppStore()
                 )

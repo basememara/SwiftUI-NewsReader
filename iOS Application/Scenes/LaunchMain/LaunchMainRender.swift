@@ -8,29 +8,30 @@
 import NewsCore
 import SwiftUI
 
+/// Sub-render instead of exposing entire root scene render to view.
 struct LaunchMainRender: RenderType {
-    private let render: SceneRender
+    private let parent: SceneRender
     
-    init(from render: SceneRender) {
-        self.render = render
+    init(parent: SceneRender) {
+        self.parent = parent
     }
 }
 
 extension LaunchMainRender {
     
     func listArticles() -> some View {
-        render.listArticles()
+        parent.listArticles()
     }
     
     func listFavorites() -> some View {
-        render.listFavorites()
+        parent.listFavorites()
     }
     
     func showProfile() -> some View {
-        render.showProfile()
+        parent.showProfile()
     }
     
     func showSettings() -> some View {
-        render.showSettings()
+        parent.showSettings()
     }
 }

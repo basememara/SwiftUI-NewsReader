@@ -19,7 +19,7 @@ struct ListFavoritesReducer: ReducerType {
 
 extension ListFavoritesReducer {
     
-    func reduce(into store: AppStore, _ action: ListFavoritesAction) {
+    func apply(_ store: AppStore, _ action: ListFavoritesAction) {
         switch action {
         case .loadFavorites:
             loadFavorites { $0(store) }

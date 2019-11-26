@@ -16,7 +16,7 @@ class ListFavoritesState: StateType, ObservableObject {
     
     // MARK: - Setup
     
-    init(from store: AppStore) {
+    init(parent store: AppStore) {
         self.favorites = store.articles
             .filter { store.favorites.contains($0.id) }
         

@@ -19,7 +19,7 @@ struct ListArticlesReducer: ReducerType {
 
 extension ListArticlesReducer {
     
-    func reduce(into store: AppStore, _ action: ListArticlesAction) {
+    func apply(_ store: AppStore, _ action: ListArticlesAction) {
         switch action {
         case .loadArticles:
             loadArticles { $0(store) }

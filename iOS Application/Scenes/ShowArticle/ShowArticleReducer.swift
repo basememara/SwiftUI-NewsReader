@@ -19,7 +19,7 @@ struct ShowArticleReducer: ReducerType {
 
 extension ShowArticleReducer {
     
-    func reduce(into store: AppStore, _ action: ShowArticleAction) {
+    func apply(_ store: AppStore, _ action: ShowArticleAction) {
         switch action {
         case .toggleFavorite(let id):
             toggleFavorite(id: id) { $0(store) }

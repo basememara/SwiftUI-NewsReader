@@ -24,7 +24,7 @@ extension SceneRender {
     func launchMain() -> some View {
         LaunchMainView(
             // Expose only some of the composer by wrapping it
-            render: LaunchMainRender(from: self)
+            render: LaunchMainRender(parent: self)
         )
     }
 }
@@ -38,13 +38,13 @@ extension SceneRender {
         
         return ListArticlesView(
             // Expose only some of the store by wrapping it
-            state: ListArticlesState(from: store),
+            state: ListArticlesState(parent: store),
             // Views use it to dispatch actions to the reducer
             dispatch: { action in // TODO: Extract to property wrapper
-                // Instead of giving the entire store to views
-                reducer.reduce(into: self.store, action)
+                // Closure captures store instead of coupling store to views
+                reducer.apply(self.store, action)
             },
-            render: ListArticlesRender(from: self)
+            render: ListArticlesRender(parent: self)
         )
     }
 }
@@ -58,15 +58,15 @@ extension SceneRender {
         
         return ShowArticleView(
             state: ShowArticleState(
-                from: store,
-                model: model,
-                text: "Test string",
-                date: Date(),
-                quantity: 99,
-                selection: "Value 1"
+                parent: store,
+                model: model
             ),
+            text: "Test string",
+            date: Date(),
+            quantity: 99,
+            selection: "Value 1",
             dispatch: { action in
-                reducer.reduce(into: self.store, action)
+                reducer.apply(self.store, action)
             }
         )
     }
@@ -80,9 +80,9 @@ extension SceneRender {
         )
         
         return ListFavoritesView(
-            state: ListFavoritesState(from: store),
+            state: ListFavoritesState(parent: store),
             dispatch: { action in
-                reducer.reduce(into: self.store, action)
+                reducer.apply(self.store, action)
             }
         )
     }

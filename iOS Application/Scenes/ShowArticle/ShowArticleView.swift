@@ -11,25 +11,30 @@ import NewsCore
 struct ShowArticleView: View {
     @ObservedObject var state: ShowArticleState
     
+    @State var text: String
+    @State var date: Date
+    @State var quantity: Int
+    @State var selection: String
+    
     let dispatch: Dispatcher<ShowArticleAction>
     
     var body: some View {
         Form {
             Section {
                 Text(state.article.title)
-                TextField("Text", text: $state.text)
+                TextField("Text", text: $text)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                Stepper(value: $state.quantity, in: 0...10) {
+                Stepper(value: $quantity, in: 0...10) {
                     Text("Quantity")
                 }
             }
             Section {
-                DatePicker(selection: $state.date) {
+                DatePicker(selection: $date) {
                     Text("Published Date")
                 }
                 Picker(
-                    selection: $state.selection,
+                    selection: $selection,
                     label: Text("Picker Name"),
                     content: {
                         Text("Value 1").tag(0)
@@ -39,10 +44,18 @@ struct ShowArticleView: View {
                     }
                 )
             }
+            Section {
+                Text(text)
+                Text("\(quantity)")
+                Text("\(date)")
+                Text(selection)
+            }
         }
         .navigationBarTitle(Text("Article"))
         .navigationBarItems(trailing:
-            Button(action: { self.dispatch(.toggleFavorite(id: self.state.article.id)) }) {
+            Button(action: {
+                self.dispatch(.toggleFavorite(id: self.state.article.id)) }
+            ) {
                 Text(state.isFavorite ? "Unfavorite" : "Favorite").font(.body)
             }
         )
@@ -68,12 +81,12 @@ struct ShowArticleView_Previews: PreviewProvider {
                             name: "Google News"
                         )
                     ),
-                    isFavorite: false,
-                    text: "Test string",
-                    date: Date(),
-                    quantity: 99,
-                    selection: "Value 1"
+                    isFavorite: false
                 ),
+                text: "Test string",
+                date: Date(),
+                quantity: 99,
+                selection: "Value 1",
                 dispatch: { _ in }
             )
         }
