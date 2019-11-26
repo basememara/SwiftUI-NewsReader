@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class PreferencesTests: BaseTestCase {
-    private lazy var preferences: PreferencesType = config.dependency()
+    private lazy var preferences: PreferencesType = core.dependency()
 }
 
 extension PreferencesTests {

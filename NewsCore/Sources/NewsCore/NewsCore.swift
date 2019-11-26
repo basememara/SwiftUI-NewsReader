@@ -1,5 +1,5 @@
 //
-//  NewsCoreConfig.swift
+//  NewsCore.swift
 //  NewsCore
 //
 //  Created by Basem Emara on 2019-11-18.
@@ -10,7 +10,7 @@ import Foundation
 /// Dependency container used to resolve instances.
 ///
 /// Implement and use as root instance factory.
-public protocol NewsCoreConfig {
+public protocol NewsCore {
     func dependency() -> ConstantsType
     func dependencyStore() -> ConstantsStore
     
@@ -45,14 +45,14 @@ public protocol NewsCoreConfig {
 
 // MARK: - Preferences
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> ConstantsType {
         Constants(store: dependencyStore())
     }
 }
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> PreferencesType {
         Preferences(store: dependencyStore())
@@ -61,7 +61,7 @@ public extension NewsCoreConfig {
 
 // MARK: - Workers
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> DataWorkerType {
         DataWorker(
@@ -91,7 +91,7 @@ public extension NewsCoreConfig {
     }
 }
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> ArticleWorkerType {
         ArticleWorker(
@@ -121,7 +121,7 @@ public extension NewsCoreConfig {
     }
 }
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> FavoriteWorkerType {
         FavoriteWorker(store: dependency())
@@ -132,7 +132,7 @@ public extension NewsCoreConfig {
     }
 }
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> NetworkServiceType {
         NetworkService(store: dependency())
@@ -143,7 +143,7 @@ public extension NewsCoreConfig {
     }
 }
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> LogWorkerType {
         LogWorker(stores: dependency())
@@ -168,7 +168,7 @@ public extension NewsCoreConfig {
 
 // MARK: - Infrastructure
 
-public extension NewsCoreConfig {
+public extension NewsCore {
     
     func dependency() -> NotificationCenter {
         .default

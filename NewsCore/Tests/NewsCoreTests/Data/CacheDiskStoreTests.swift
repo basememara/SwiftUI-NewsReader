@@ -9,9 +9,9 @@ import XCTest
 @testable import NewsCore
 
 final class CacheDiskStoreTests: BaseTestCase {
-    private lazy var store: CacheStore = config.dependency()
-    private lazy var dataWorker: DataWorkerType = config.dependency()
-    private lazy var fileManager: FileManager = config.dependency()
+    private lazy var store: CacheStore = core.dependency()
+    private lazy var dataWorker: DataWorkerType = core.dependency()
+    private lazy var fileManager: FileManager = core.dependency()
 }
 
 extension CacheDiskStoreTests {
@@ -106,7 +106,7 @@ extension CacheDiskStoreTests {
                 return
             }
             
-            let articleCache: ArticleCache = self.config.dependency()
+            let articleCache: ArticleCache = self.core.dependency()
             
             articleCache.fetch(with: .init()) {
                 defer { promise.fulfill() }

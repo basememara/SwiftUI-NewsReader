@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class SeedFileStoreTests: BaseTestCase {
-    private lazy var store: SeedStore = config.dependency()
+    private lazy var store: SeedStore = core.dependency()
     
     // TODO: Create unit test
 }

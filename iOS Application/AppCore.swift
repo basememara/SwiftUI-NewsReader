@@ -1,5 +1,5 @@
 //
-//  AppConfig.swift
+//  AppCore.swift
 //  NewsReader
 //
 //  Created by Basem Emara on 2019-11-20.
@@ -8,7 +8,7 @@
 import Foundation
 import NewsCore
 
-struct AppConfig: NewsCoreConfig {
+struct AppCore: NewsCore {
     private let environment: Environment
     
     init() {

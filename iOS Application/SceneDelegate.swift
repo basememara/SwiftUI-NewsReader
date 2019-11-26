@@ -12,7 +12,7 @@ import NewsCore
 class SceneDelegate: ScenePluggableDelegate {
         
     override func plugins() -> [ScenePlugin] {[
-        LoggerPlugin(log: config.dependency()),
-        WindowPlugin(for: self, log: config.dependency())
+        LoggerPlugin(log: core.dependency()),
+        WindowPlugin(for: self, log: core.dependency())
     ]}
 }

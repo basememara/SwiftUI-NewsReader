@@ -12,27 +12,27 @@ import NewsCore
 class AppDelegate: ApplicationPluggableDelegate {
     
     override func plugins() -> [ApplicationPlugin] {[
-        LoggerPlugin(log: config.dependency()),
-        CachePlugin(dataWorker: config.dependency(), log: config.dependency())
+        LoggerPlugin(log: core.dependency()),
+        CachePlugin(dataWorker: core.dependency(), log: core.dependency())
     ]}
 }
 
 // MARK: - Environment Components
 
 private extension UIApplication {
-    static let config = AppConfig()
+    static let core = AppCore()
     static let store = AppStore()
     static let composer = SceneComposer(
-        config: config,
+        core: core,
         store: store
     )
 }
 
 extension UIApplicationDelegate {
-    var config: NewsCoreConfig { UIApplication.config }
+    var core: NewsCore { UIApplication.core }
 }
 
 extension UISceneDelegate {
-    var config: NewsCoreConfig { UIApplication.config }
+    var core: NewsCore { UIApplication.core }
     var composer: SceneComposer { UIApplication.composer }
 }

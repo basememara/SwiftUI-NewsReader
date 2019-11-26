@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class RemoteNetworkStoreTests: BaseTestCase {
-    private lazy var store: RemoteStore = config.dependency()
+    private lazy var store: RemoteStore = core.dependency()
     
     // TODO: Create unit test
 }

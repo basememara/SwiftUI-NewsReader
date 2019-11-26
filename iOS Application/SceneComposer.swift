@@ -11,11 +11,11 @@ import NewsCore
 
 /// Use to construct views centrally.
 struct SceneComposer {
-    private let config: NewsCoreConfig
+    private let core: NewsCore
     private let store: AppStore
     
-    init(config: NewsCoreConfig, store: AppStore) {
-        self.config = config
+    init(core: NewsCore, store: AppStore) {
+        self.core = core
         self.store = store
     }
 }
@@ -33,7 +33,7 @@ extension SceneComposer {
     
     func listArticles() -> some View {
         let reducer = ListArticlesReducer(
-            articleWorker: config.dependency()
+            articleWorker: core.dependency()
         )
         
         return ListArticlesView(
@@ -50,7 +50,7 @@ extension SceneComposer {
     
     func showArticle(for article: Article) -> some View {
         let reducer = ShowArticleReducer(
-            favoriteWorker: config.dependency()
+            favoriteWorker: core.dependency()
         )
         
         return ShowArticleView(
@@ -66,7 +66,7 @@ extension SceneComposer {
     
     func listFavorites() -> some View {
         let reducer = ListFavoritesReducer(
-            favoriteWorker: config.dependency()
+            favoriteWorker: core.dependency()
         )
         
         return ListFavoritesView(

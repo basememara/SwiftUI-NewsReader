@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 final class ArticleDiskStoreTests: BaseTestCase {
-    private lazy var store: ArticleCache = config.dependency()
+    private lazy var store: ArticleCache = core.dependency()
     
     // TODO: Create unit test
     

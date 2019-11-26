@@ -30,7 +30,7 @@
 		8BF857AA2385CD4A0046FEC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BF857A82385CD4A0046FEC7 /* LaunchScreen.storyboard */; };
 		8BF857B82385CDA30046FEC7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857B42385CDA30046FEC7 /* SceneDelegate.swift */; };
 		8BF857BB2385E69B0046FEC7 /* NewsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8BF857BA2385E69B0046FEC7 /* NewsCore */; };
-		8BF857BD2385EE490046FEC7 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857BC2385EE490046FEC7 /* AppConfig.swift */; };
+		8BF857BD2385EE490046FEC7 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857BC2385EE490046FEC7 /* AppCore.swift */; };
 		8BF857C22385EF5F0046FEC7 /* seed.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BF857C12385EF5F0046FEC7 /* seed.json */; };
 		8BF857C52385EFB20046FEC7 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF857C42385EFB20046FEC7 /* DefaultTheme.swift */; };
 		8BF857C72385F00A0046FEC7 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BF857C62385F00A0046FEC7 /* Theme.xcassets */; };
@@ -66,7 +66,7 @@
 		8BF857A92385CD4A0046FEC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BF857AB2385CD4A0046FEC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BF857B42385CDA30046FEC7 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8BF857BC2385EE490046FEC7 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		8BF857BC2385EE490046FEC7 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		8BF857BE2385EECA0046FEC7 /* NewsReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NewsReader.entitlements; sourceTree = "<group>"; };
 		8BF857C12385EF5F0046FEC7 /* seed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed.json; sourceTree = "<group>"; };
 		8BF857C42385EFB20046FEC7 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
@@ -147,9 +147,11 @@
 			children = (
 				8BF857BF2385EF480046FEC7 /* Common */,
 				8BF857AF2385CDA30046FEC7 /* Scenes */,
-				8BF857BC2385EE490046FEC7 /* AppConfig.swift */,
-				8BF857C82386079C0046FEC7 /* AppStore.swift */,
+				8BF857BC2385EE490046FEC7 /* AppCore.swift */,
 				8BF8579D2385CD470046FEC7 /* AppDelegate.swift */,
+				8BF857C82386079C0046FEC7 /* AppStore.swift */,
+				8BFB2351238729160039EBEE /* SceneComposer.swift */,
+				8BF857B42385CDA30046FEC7 /* SceneDelegate.swift */,
 				8BF857A32385CD4A0046FEC7 /* Assets.xcassets */,
 				8BB188B123863E5400ED6018 /* Supporting Files */,
 				8BF857A52385CD4A0046FEC7 /* Preview Content */,
@@ -175,8 +177,6 @@
 				8BB188B423864CB200ED6018 /* ShowProfile */,
 				8BF857B32385CDA30046FEC7 /* ShowSettings */,
 				8BF857A82385CD4A0046FEC7 /* LaunchScreen.storyboard */,
-				8BF857B42385CDA30046FEC7 /* SceneDelegate.swift */,
-				8BFB2351238729160039EBEE /* SceneComposer.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -342,7 +342,7 @@
 				8BCDF546238C145900FCC1F6 /* ListFavoritesReducer.swift in Sources */,
 				8BFB234A23870D120039EBEE /* WindowPlugin.swift in Sources */,
 				8BEFE55A2388F390000508B5 /* LaunchMainComposer.swift in Sources */,
-				8BF857BD2385EE490046FEC7 /* AppConfig.swift in Sources */,
+				8BF857BD2385EE490046FEC7 /* AppCore.swift in Sources */,
 				8BEFE5622388F39E000508B5 /* ListArticlesComposer.swift in Sources */,
 				8BF8579E2385CD470046FEC7 /* AppDelegate.swift in Sources */,
 				8BEFE55F2388F39E000508B5 /* ListArticlesAction.swift in Sources */,

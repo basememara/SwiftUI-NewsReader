@@ -9,8 +9,8 @@ import XCTest
 import NewsCore
 
 final class NetworkServiceTests: BaseTestCase {
-    private lazy var service: NetworkServiceType = config.dependency()
-    private lazy var constants: ConstantsType = config.dependency()
+    private lazy var service: NetworkServiceType = core.dependency()
+    private lazy var constants: ConstantsType = core.dependency()
 }
 
 extension NetworkServiceTests {

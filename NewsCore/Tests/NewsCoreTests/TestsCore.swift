@@ -1,5 +1,5 @@
 //
-//  TestsConfig.swift
+//  TestsCore.swift
 //  NewsCoreTests
 //
 //  Created by Basem Emara on 2019-11-18.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import NewsCore
 
-struct TestsConfig: NewsCoreConfig {
+struct TestsCore: NewsCore {
     
     func dependencyStore() -> ConstantsStore {
         ConstantsMemoryStore(
@@ -46,7 +46,7 @@ struct TestsConfig: NewsCoreConfig {
     }
 }
 
-private extension TestsConfig {
+private extension TestsCore {
     
     struct SeedJSONStore: SeedStore {
         private static var data: CorePayload?

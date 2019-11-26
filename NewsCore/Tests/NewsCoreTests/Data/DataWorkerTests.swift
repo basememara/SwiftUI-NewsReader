@@ -9,12 +9,12 @@ import XCTest
 @testable import NewsCore
 
 final class DataWorkerTests: BaseTestCase {
-    private lazy var worker: DataWorkerType = config.dependency()
+    private lazy var worker: DataWorkerType = core.dependency()
     
     override func setUp() {
         super.setUp()
         
-        config = LocalConfig()
+        core = LocalConfig()
         worker.configure()
     }
 }
@@ -47,7 +47,7 @@ extension DataWorkerTests {
 
 private extension DataWorkerTests {
     
-    struct LocalConfig: NewsCoreConfig {
+    struct LocalConfig: NewsCore {
         
         func dependencyStore() -> ConstantsStore {
             ConstantsMemoryStore(
