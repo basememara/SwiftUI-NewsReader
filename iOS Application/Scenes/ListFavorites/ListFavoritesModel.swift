@@ -1,5 +1,5 @@
 //
-//  ShowArticleState.swift
+//  ShowArticleModel.swift
 //  NewsReader iOS
 //
 //  Created by Basem Emara on 2019-11-24.
@@ -8,7 +8,7 @@
 import Combine
 import NewsCore
 
-class ListFavoritesState: StateType, ObservableObject {
+class ListFavoritesModel: ModelType, ObservableObject {
     // Immutable from the outside
     @Published private(set) var favorites: [Article]
     
@@ -16,16 +16,16 @@ class ListFavoritesState: StateType, ObservableObject {
     
     // MARK: - Setup
     
-    init(parent store: AppStore) {
-        self.favorites = store.articles
-            .filter { store.favorites.contains($0.id) }
+    init(parent state: AppState) {
+        self.favorites = state.articles
+            .filter { state.favorites.contains($0.id) }
         
         // One-way binding for unidirectional flow
-        store.$favorites
+        state.$favorites
             .map { value in
                 // TODO: Optimize lookup
                 value.compactMap { article in
-                    store.articles.first { $0.id == article }
+                    state.articles.first { $0.id == article }
                 }
             }
             .assign(to: \Self.favorites, on: self)
@@ -33,7 +33,7 @@ class ListFavoritesState: StateType, ObservableObject {
     }
     
     /// Non-reactive initializer for static state. Primarily used for previews and testing.
-    init(model: [Article]) {
-        self.favorites = model
+    init(articles: [Article]) {
+        self.favorites = articles
     }
 }

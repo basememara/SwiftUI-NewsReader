@@ -9,9 +9,9 @@
 protocol ReducerType {
     associatedtype Action = ActionType
     
-    /// Performs the logic and mutates the store.
+    /// Performs the logic and mutates the state.
     /// - Parameters:
-    ///   - store: The global store for the application
-    ///   - action: The action to perform on the store.
-    func apply(_ store: AppStore, _ action: Action)
+    ///   - state: The global state for the application
+    ///   - action: The action to perform on the state.
+    func apply(_ state: AppState, _ action: Action)
 }

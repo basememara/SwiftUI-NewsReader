@@ -9,18 +9,18 @@ import SwiftUI
 import NewsCore
 
 struct ListArticlesView: View {
-    @ObservedObject var state: ListArticlesState
+    @ObservedObject var model: ListArticlesModel
     
     let dispatch: Dispatcher<ListArticlesAction>
     let render: ListArticlesRender?
     
     var body: some View {
-        List(state.articles) { model in
+        List(model.articles) { article in
             NavigationLink(
                 destination: self.render?
-                    .showArticle(model)
+                    .showArticle(id: article.id)
             ) {
-                Text(model.title)
+                Text(article.title)
                     .font(.body)
             }
         }
@@ -28,12 +28,12 @@ struct ListArticlesView: View {
         .navigationBarItems(trailing:
             Button(
                 action: {
-                    self.state.articles.isEmpty
+                    self.model.articles.isEmpty
                         ? self.dispatch(.loadArticles)
                         : self.dispatch(.clearArticles)
                 },
                 label: {
-                    Text(self.state.articles.isEmpty ? "Load" : "Clear").font(.body)
+                    Text(self.model.articles.isEmpty ? "Load" : "Clear").font(.body)
                 }
             )
         ).onAppear {
@@ -47,8 +47,8 @@ struct ListArticlesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ListArticlesView(
-                state: ListArticlesState(
-                    model: [
+                model: ListArticlesModel(
+                    articles: [
                         Article(
                             url: "http://example.com/1",
                             title: "Example article 1",

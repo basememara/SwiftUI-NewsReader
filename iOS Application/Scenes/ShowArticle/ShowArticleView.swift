@@ -9,7 +9,7 @@ import SwiftUI
 import NewsCore
 
 struct ShowArticleView: View {
-    @ObservedObject var state: ShowArticleState
+    @ObservedObject var model: ShowArticleModel
     
     @State var text: String
     @State var date: Date
@@ -18,10 +18,14 @@ struct ShowArticleView: View {
     
     let dispatch: Dispatcher<ShowArticleAction>
     
+    private let dataFormatter = DateFormatter().with {
+        $0.dateStyle = .medium
+    }
+    
     var body: some View {
         Form {
             Section {
-                Text(state.article.title)
+                Text(model.article.title)
                 TextField("Text", text: $text)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
@@ -30,6 +34,11 @@ struct ShowArticleView: View {
                 }
             }
             Section {
+                TextField(
+                    "Formatted Date",
+                    value: $date,
+                    formatter: dataFormatter
+                )
                 DatePicker(selection: $date) {
                     Text("Published Date")
                 }
@@ -54,9 +63,9 @@ struct ShowArticleView: View {
         .navigationBarTitle(Text("Article"))
         .navigationBarItems(trailing:
             Button(action: {
-                self.dispatch(.toggleFavorite(id: self.state.article.id)) }
+                self.dispatch(.toggleFavorite(id: self.model.article.id)) }
             ) {
-                Text(state.isFavorite ? "Unfavorite" : "Favorite").font(.body)
+                Text(model.isFavorite ? "Unfavorite" : "Favorite").font(.body)
             }
         )
     }
@@ -67,8 +76,8 @@ struct ShowArticleView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ShowArticleView(
-                state: ShowArticleState(
-                    model: Article(
+                model: ShowArticleModel(
+                    article: Article(
                         url: "http://example.com/1",
                         title: "Example article 1",
                         content: "This is a test content for 1.",

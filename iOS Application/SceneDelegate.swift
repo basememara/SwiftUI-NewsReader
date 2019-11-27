@@ -14,7 +14,7 @@ class SceneDelegate: ScenePluggableDelegate {
     /// Root builder for all scenes. Create views only through scene renders.
     private lazy var render = SceneRender(
         core: core,
-        store: store,
+        state: state,
         middleware: [
             AnalyticsMiddleware()
         ]

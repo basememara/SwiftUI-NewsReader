@@ -9,19 +9,19 @@ import SwiftUI
 import NewsCore
 
 struct ListFavoritesView: View {
-    @ObservedObject var state: ListFavoritesState
+    @ObservedObject var model: ListFavoritesModel
     
     let dispatch: Dispatcher<ListFavoritesAction>
     
     var body: some View {
         
         List {
-            ForEach(state.favorites) { article in
+            ForEach(model.favorites) { article in
                 Text(article.title)
             }
             .onDelete {
                 guard let index = $0.first,
-                    let article = self.state.favorites[safe: index] else {
+                    let article = self.model.favorites[safe: index] else {
                         return
                 }
                 
@@ -40,8 +40,8 @@ struct ListFavoritesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ListFavoritesView(
-                state: ListFavoritesState(
-                    model: [
+                model: ListFavoritesModel(
+                    articles: [
                         Article(
                             url: "http://example.com/1",
                             title: "Example article 1",

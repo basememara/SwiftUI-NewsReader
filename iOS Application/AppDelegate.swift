@@ -21,7 +21,7 @@ class AppDelegate: ApplicationPluggableDelegate {
 
 private extension UIApplication {
     static let core = AppCore()
-    static let store = AppStore()
+    static let state = AppState()
 }
 
 extension UIApplicationDelegate {
@@ -30,5 +30,5 @@ extension UIApplicationDelegate {
 
 extension UISceneDelegate {
     var core: NewsCore { UIApplication.core }
-    var store: AppStore { UIApplication.store }
+    var state: AppState { UIApplication.state }
 }

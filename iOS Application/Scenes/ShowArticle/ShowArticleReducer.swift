@@ -19,10 +19,10 @@ struct ShowArticleReducer: ReducerType {
 
 extension ShowArticleReducer {
     
-    func apply(_ store: AppStore, _ action: ShowArticleAction) {
+    func apply(_ state: AppState, _ action: ShowArticleAction) {
         switch action {
         case .toggleFavorite(let id):
-            toggleFavorite(id: id) { $0(store) }
+            toggleFavorite(id: id) { $0(state) }
         }
     }
 }
@@ -31,7 +31,7 @@ extension ShowArticleReducer {
 
 private extension ShowArticleReducer {
     
-    func toggleFavorite(id: String, mutate store: @escaping MutateStoreFunction) {
+    func toggleFavorite(id: String, mutate state: @escaping MutateStateFunction) {
         favoriteProvider.toggleArticle(id: id)
         
         favoriteProvider.fetchArticles {
@@ -40,8 +40,8 @@ private extension ShowArticleReducer {
                 return
             }
             
-            // Mutate store since now complete
-            store {
+            // Mutate state since now complete
+            state {
                 $0.favorites = value
             }
         }

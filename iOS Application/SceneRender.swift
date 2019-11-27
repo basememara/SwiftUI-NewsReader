@@ -11,15 +11,17 @@ import SwiftUI
 /// Root composer used to construct all views.
 struct SceneRender {
     private let core: NewsCore
-    private let store: AppStore
+    private let state: AppState
     private let middleware: [MiddlewareType]
     
-    init(core: NewsCore, store: AppStore, middleware: [MiddlewareType]) {
+    init(core: NewsCore, state: AppState, middleware: [MiddlewareType]) {
         self.core = core
-        self.store = store
+        self.state = state
         self.middleware = middleware
     }
 }
+
+// MARK: - Scenes
 
 extension SceneRender {
     
@@ -34,21 +36,16 @@ extension SceneRender {
 extension SceneRender {
     
     func listArticles() -> some View {
-        let reducer = ListArticlesReducer(
-            articleProvider: core.dependency()
-        )
-        
-        return ListArticlesView(
-            // Expose only some of the store by wrapping it
-            model: ListArticlesModel(parent: store),
-            // Views use it to dispatch actions to the reducer
-            dispatch: { action in // TODO: Extract to property wrapper
-                // Allow middleware to passively execute against action
-                self.middleware.forEach { $0.execute(on: action) }
-                
-                // Closure captures store instead of coupling store to views
-                reducer.apply(self.store, action)
-            },
+        ListArticlesView(
+            // Expose only some of the state by wrapping it
+            model: ListArticlesModel(parent: state),
+            // Views uses it to dispatch actions to the reducer
+            dispatch: make(from:
+                ListArticlesReducer(
+                    articleProvider: core.dependency()
+                )
+            ),
+            // Expose only some of the scene render by wrapping it
             render: ListArticlesRender(parent: self)
         )
     }
@@ -56,24 +53,21 @@ extension SceneRender {
 
 extension SceneRender {
     
-    func showArticle(_ model: Article) -> some View {
-        let reducer = ShowArticleReducer(
-            favoriteProvider: core.dependency()
-        )
-        
-        return ShowArticleView(
-            state: ShowArticleState(
-                parent: store,
-                model: model
+    func showArticle(id: String) -> some View {
+        ShowArticleView(
+            model: ShowArticleModel(
+                parent: state,
+                id: id
             ),
             text: "Test string",
             date: Date(),
             quantity: 99,
             selection: "Value 1",
-            dispatch: { action in
-                self.middleware.forEach { $0.execute(on: action) }
-                reducer.apply(self.store, action)
-            }
+            dispatch: make(from:
+                ShowArticleReducer(
+                    favoriteProvider: core.dependency()
+                )
+            )
         )
     }
 }
@@ -81,16 +75,13 @@ extension SceneRender {
 extension SceneRender {
     
     func listFavorites() -> some View {
-        let reducer = ListFavoritesReducer(
-            favoriteProvider: core.dependency()
-        )
-        
-        return ListFavoritesView(
-            state: ListFavoritesState(parent: store),
-            dispatch: { action in
-                self.middleware.forEach { $0.execute(on: action) }
-                reducer.apply(self.store, action)
-            }
+        ListFavoritesView(
+            model: ListFavoritesModel(parent: state),
+            dispatch: make(from:
+                ListFavoritesReducer(
+                    favoriteProvider: core.dependency()
+                )
+            )
         )
     }
 }
@@ -113,6 +104,21 @@ extension SceneRender {
     
     func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap
-        showArticle(store.articles.first(where: { $0.url == url.absoluteString })!)
+        showArticle(id: state.articles.first(where: { $0.url == url.absoluteString })!.id)
+    }
+}
+
+// MARK: - Helpers
+
+private extension SceneRender {
+    
+    func make<Action, Reducer>(from reducer: Reducer) -> Dispatcher<Action> where Reducer: ReducerType, Reducer.Action == Action {
+        { action in
+            // Allow middleware to passively execute against action
+            self.middleware.forEach { $0.execute(on: action) }
+            
+            // Mutate the state for the action
+            reducer.apply(self.state, action)
+        }
     }
 }

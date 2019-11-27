@@ -8,6 +8,7 @@
 import NewsCore
 import SwiftUI
 
+/// Constructs a scene without exposing the entire `SceneRender` to the view.
 struct ListArticlesRender: RenderType {
     private let parent: SceneRender
     
@@ -18,7 +19,7 @@ struct ListArticlesRender: RenderType {
 
 extension ListArticlesRender {
     
-    func showArticle(_ model: Article) -> some View {
-        parent.showArticle(model)
+    func showArticle(id: String) -> some View {
+        parent.showArticle(id: id)
     }
 }

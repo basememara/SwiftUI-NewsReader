@@ -19,12 +19,12 @@ struct ListFavoritesReducer: ReducerType {
 
 extension ListFavoritesReducer {
     
-    func apply(_ store: AppStore, _ action: ListFavoritesAction) {
+    func apply(_ state: AppState, _ action: ListFavoritesAction) {
         switch action {
         case .loadFavorites:
-            loadFavorites { $0(store) }
+            loadFavorites { $0(state) }
         case .toggleFavorite(let id):
-            toggleFavorite(id: id) { $0(store) }
+            toggleFavorite(id: id) { $0(state) }
         }
     }
 }
@@ -33,15 +33,15 @@ extension ListFavoritesReducer {
 
 private extension ListFavoritesReducer {
     
-    func loadFavorites(mutate store: @escaping MutateStoreFunction) {
+    func loadFavorites(mutate state: @escaping MutateStateFunction) {
         favoriteProvider.fetchArticles {
             guard case .success(let value) = $0 else {
                 // TODO: Handle error
                 return
             }
             
-            // Mutate store since now complete
-            store {
+            // Mutate state since now complete
+            state {
                 $0.favorites = value
             }
         }
@@ -50,8 +50,8 @@ private extension ListFavoritesReducer {
 
 private extension ListFavoritesReducer {
     
-    func toggleFavorite(id: String, mutate store: @escaping MutateStoreFunction) {
+    func toggleFavorite(id: String, mutate state: @escaping MutateStateFunction) {
         favoriteProvider.toggleArticle(id: id)
-        loadFavorites(mutate: store) // TODO: Optimize
+        loadFavorites(mutate: state) // TODO: Optimize
     }
 }
