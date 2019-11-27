@@ -16,11 +16,11 @@ class SceneDelegate: ScenePluggableDelegate {
         core: core,
         store: store,
         middleware: [
-            TestMiddleware()
+            AnalyticsMiddleware()
         ]
     )
     
-    private lazy var log: LogWorkerType = core.dependency()
+    private lazy var log: LogProviderType = core.dependency()
         
     override func plugins() -> [ScenePlugin] {[
         LoggerPlugin(log: log)

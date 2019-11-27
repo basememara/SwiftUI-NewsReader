@@ -40,7 +40,7 @@ public protocol RemoteStore {
     func fetchLatest(after date: Date?, with request: DataAPI.RemoteRequest, completion: @escaping (Result<CorePayload, DataError>) -> Void)
 }
 
-public protocol DataWorkerType {
+public protocol DataProviderType {
     
     /// Setup the underlying storage for use.
     func configure()
@@ -54,7 +54,7 @@ public protocol DataWorkerType {
     func pull(completion: ((Result<CorePayload, DataError>) -> Void)?)
 }
 
-public extension DataWorkerType {
+public extension DataProviderType {
     
     /// Retrieves the latest changes from the remote source.
     func pull() {

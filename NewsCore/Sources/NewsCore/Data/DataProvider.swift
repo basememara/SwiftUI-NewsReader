@@ -1,5 +1,5 @@
 //
-//  DataWorker.swift
+//  DataProvider.swift
 //  NewsCore
 //
 //  Created by Basem Emara on 2019-11-18.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-public struct DataWorker: DataWorkerType {
+public struct DataProvider: DataProviderType {
     private let constants: ConstantsType
     private let cacheStore: CacheStore
     private let seedStore: SeedStore
     private let remoteStore: RemoteStore
-    private let log: LogWorkerType
+    private let log: LogProviderType
     
-    init(constants: ConstantsType, cacheStore: CacheStore, seedStore: SeedStore, remoteStore: RemoteStore, log: LogWorkerType) {
+    init(constants: ConstantsType, cacheStore: CacheStore, seedStore: SeedStore, remoteStore: RemoteStore, log: LogProviderType) {
         self.constants = constants
         self.cacheStore = cacheStore
         self.seedStore = seedStore
@@ -23,7 +23,7 @@ public struct DataWorker: DataWorkerType {
     }
 }
 
-public extension DataWorker {
+public extension DataProvider {
     
     func configure() {
         cacheStore.configure()
@@ -36,9 +36,9 @@ public extension DataWorker {
     }
 }
 
-public extension DataWorker {
+public extension DataProvider {
     // Handle simultanuous update requests in a queue
-    private static let queue = DispatchQueue(label: "\(DispatchQueue.labelPrefix).DataWorker.sync")
+    private static let queue = DispatchQueue(label: "\(DispatchQueue.labelPrefix).DataProvider.sync")
     private static var tasks = [((Result<CorePayload, DataError>) -> Void)]()
     private static var isUpdating = false
     
@@ -71,7 +71,7 @@ public extension DataWorker {
 
 // MARK: - Helpers
 
-private extension DataWorker {
+private extension DataProvider {
     
     func seedFromLocal() {
         seedStore.fetch {
@@ -141,7 +141,7 @@ private extension DataWorker {
     }
 }
 
-private extension DataWorker {
+private extension DataProvider {
     
     func seedFromRemote(after date: Date) {
         let request = DataAPI.RemoteRequest()
@@ -160,7 +160,7 @@ private extension DataWorker {
     }
 }
 
-private extension DataWorker {
+private extension DataProvider {
     
     func executeTasks(_ result: Result<CorePayload, DataError>) {
         Self.queue.async {

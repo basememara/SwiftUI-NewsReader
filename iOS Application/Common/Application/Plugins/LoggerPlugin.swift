@@ -9,9 +9,9 @@ import UIKit
 import NewsCore
 
 final class LoggerPlugin {
-    private let log: LogWorkerType
+    private let log: LogProviderType
     
-    init(log: LogWorkerType) {
+    init(log: LogProviderType) {
         self.log = log
     }
 }

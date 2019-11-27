@@ -35,12 +35,12 @@ extension SceneRender {
     
     func listArticles() -> some View {
         let reducer = ListArticlesReducer(
-            articleWorker: core.dependency()
+            articleProvider: core.dependency()
         )
         
         return ListArticlesView(
             // Expose only some of the store by wrapping it
-            state: ListArticlesState(parent: store),
+            model: ListArticlesModel(parent: store),
             // Views use it to dispatch actions to the reducer
             dispatch: { action in // TODO: Extract to property wrapper
                 // Allow middleware to passively execute against action
@@ -58,7 +58,7 @@ extension SceneRender {
     
     func showArticle(_ model: Article) -> some View {
         let reducer = ShowArticleReducer(
-            favoriteWorker: core.dependency()
+            favoriteProvider: core.dependency()
         )
         
         return ShowArticleView(
@@ -82,7 +82,7 @@ extension SceneRender {
     
     func listFavorites() -> some View {
         let reducer = ListFavoritesReducer(
-            favoriteWorker: core.dependency()
+            favoriteProvider: core.dependency()
         )
         
         return ListFavoritesView(

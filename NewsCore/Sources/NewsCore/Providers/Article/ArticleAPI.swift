@@ -10,7 +10,7 @@ import Foundation
 /// Namespace
 public enum ArticleAPI {}
 
-public protocol ArticleWorkerType {
+public protocol ArticleProviderType {
     func fetch(with request: ArticleAPI.FetchRequest, completion: @escaping (Result<[Article], DataError>) -> Void)
     func fetch(url: String, completion: @escaping (Result<Article, DataError>) -> Void)
 }

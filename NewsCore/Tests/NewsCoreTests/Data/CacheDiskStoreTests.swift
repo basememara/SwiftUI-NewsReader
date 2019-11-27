@@ -10,7 +10,7 @@ import XCTest
 
 final class CacheDiskStoreTests: BaseTestCase {
     private lazy var store: CacheStore = core.dependency()
-    private lazy var dataWorker: DataWorkerType = core.dependency()
+    private lazy var dataProvider: DataProviderType = core.dependency()
     private lazy var fileManager: FileManager = core.dependency()
 }
 
@@ -138,7 +138,7 @@ extension CacheDiskStoreTests {
             return
         }
         
-        dataWorker.pull { [weak self] in
+        dataProvider.pull { [weak self] in
             defer { promise.fulfill() }
             
             guard let self = self, case .success = $0 else {

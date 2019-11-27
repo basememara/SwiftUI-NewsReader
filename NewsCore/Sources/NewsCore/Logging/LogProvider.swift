@@ -1,5 +1,5 @@
 //
-//  LogWorker.swift
+//  LogProvider.swift
 //  NewsCore
 //
 //  Created by Basem Emara on 2019-11-18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LogWorker: LogWorkerType {
+public struct LogProvider: LogProviderType {
     private let stores: [LogStore]
     
     public init(stores: [LogStore]) {
@@ -15,8 +15,8 @@ public struct LogWorker: LogWorkerType {
     }
 }
 
-public extension LogWorker {
-    private static let queue = DispatchQueue(label: "NewsCore.LogWorker", qos: .utility)
+public extension LogProvider {
+    private static let queue = DispatchQueue(label: "NewsCore.LogProvider", qos: .utility)
     
     func write(_ level: LogAPI.Level, with message: String, path: String, function: String, line: Int, context: [String: Any]?, completion: (() -> Void)?) {
         let destinations = stores.filter { $0.canWrite(for: level) }

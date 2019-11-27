@@ -13,7 +13,7 @@ public struct ArticleDiskStore: ArticleCache {
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder
     private let constants: ConstantsType
-    private let log: LogWorkerType
+    private let log: LogProviderType
     
     public init(
         store: CacheStore,
@@ -21,7 +21,7 @@ public struct ArticleDiskStore: ArticleCache {
         jsonDecoder: JSONDecoder,
         jsonEncoder: JSONEncoder,
         constants: ConstantsType,
-        log: LogWorkerType
+        log: LogProviderType
     ) {
         self.store = store
         self.fileManager = fileManager

@@ -9,7 +9,7 @@ import XCTest
 import NewsCore
 
 class BaseTestCase: XCTestCase {
-    private lazy var dataWorker: DataWorkerType = core.dependency()
+    private lazy var dataProvider: DataProviderType = core.dependency()
     private lazy var preferences: PreferencesType = core.dependency()
     
     lazy var core: NewsCore = TestsCore()
@@ -18,11 +18,11 @@ class BaseTestCase: XCTestCase {
         super.setUp()
         
         // Clear previous
-        dataWorker.reset()
+        dataProvider.reset()
         preferences.removeAll()
         UserDefaults.test.removeAll()
         
         // Setup database
-        dataWorker.configure()
+        dataProvider.configure()
     }
 }

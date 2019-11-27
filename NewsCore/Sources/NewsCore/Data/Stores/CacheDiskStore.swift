@@ -12,14 +12,14 @@ public struct CacheDiskStore: CacheStore {
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder
     private let constants: ConstantsType
-    private let log: LogWorkerType
+    private let log: LogProviderType
     
     public init(
         fileManager: FileManager,
         jsonDecoder: JSONDecoder,
         jsonEncoder: JSONEncoder,
         constants: ConstantsType,
-        log: LogWorkerType
+        log: LogProviderType
     ) {
         self.fileManager = fileManager
         self.jsonDecoder = jsonDecoder

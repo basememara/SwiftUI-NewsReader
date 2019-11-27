@@ -8,10 +8,10 @@
 import NewsCore
 
 struct ListArticlesReducer: ReducerType {
-    private let articleWorker: ArticleWorkerType
+    private let articleProvider: ArticleProviderType
     
-    init(articleWorker: ArticleWorkerType) {
-        self.articleWorker = articleWorker
+    init(articleProvider: ArticleProviderType) {
+        self.articleProvider = articleProvider
     }
 }
 
@@ -34,7 +34,7 @@ extension ListArticlesReducer {
 private extension ListArticlesReducer {
     
     func loadArticles(mutate store: @escaping MutateStoreFunction) {
-        articleWorker.fetch(with: .init()) {
+        articleProvider.fetch(with: .init()) {
             guard case .success(let value) = $0 else {
                 // TODO: Handle error
                 return

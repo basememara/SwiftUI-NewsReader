@@ -11,13 +11,13 @@ public struct ArticleNetworkStore: ArticleRemote {
     private let networkService: NetworkServiceType
     private let jsonDecoder: JSONDecoder
     private let constants: ConstantsType
-    private let log: LogWorkerType
+    private let log: LogProviderType
     
     public init(
         networkService: NetworkServiceType,
         jsonDecoder: JSONDecoder,
         constants: ConstantsType,
-        log: LogWorkerType
+        log: LogProviderType
     ) {
         self.networkService = networkService
         self.jsonDecoder = jsonDecoder

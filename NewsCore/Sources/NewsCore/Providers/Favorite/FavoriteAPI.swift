@@ -10,7 +10,7 @@ import Foundation
 /// Namespace
 public enum FavoriteAPI {}
 
-public protocol FavoriteWorkerType {
+public protocol FavoriteProviderType {
     func fetchArticles(completion: @escaping (Result<[String], DataError>) -> Void)
     func addArticle(id: String)
     func removeArticle(id: String)

@@ -8,10 +8,10 @@
 import NewsCore
 
 struct ListFavoritesReducer: ReducerType {
-    private let favoriteWorker: FavoriteWorkerType
+    private let favoriteProvider: FavoriteProviderType
     
-    init(favoriteWorker: FavoriteWorkerType) {
-        self.favoriteWorker = favoriteWorker
+    init(favoriteProvider: FavoriteProviderType) {
+        self.favoriteProvider = favoriteProvider
     }
 }
 
@@ -34,7 +34,7 @@ extension ListFavoritesReducer {
 private extension ListFavoritesReducer {
     
     func loadFavorites(mutate store: @escaping MutateStoreFunction) {
-        favoriteWorker.fetchArticles {
+        favoriteProvider.fetchArticles {
             guard case .success(let value) = $0 else {
                 // TODO: Handle error
                 return
@@ -51,7 +51,7 @@ private extension ListFavoritesReducer {
 private extension ListFavoritesReducer {
     
     func toggleFavorite(id: String, mutate store: @escaping MutateStoreFunction) {
-        favoriteWorker.toggleArticle(id: id)
+        favoriteProvider.toggleArticle(id: id)
         loadFavorites(mutate: store) // TODO: Optimize
     }
 }

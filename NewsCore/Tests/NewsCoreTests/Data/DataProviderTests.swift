@@ -1,5 +1,5 @@
 //
-//  DataWorkerTests.swift
+//  DataProviderTests.swift
 //  NewsCoreTests
 //
 //  Created by Basem Emara on 2019-11-18.
@@ -8,25 +8,25 @@
 import XCTest
 @testable import NewsCore
 
-final class DataWorkerTests: BaseTestCase {
-    private lazy var worker: DataWorkerType = core.dependency()
+final class DataProviderTests: BaseTestCase {
+    private lazy var provider: DataProviderType = core.dependency()
     
     override func setUp() {
         super.setUp()
         
         core = LocalConfig()
-        worker.configure()
+        provider.configure()
     }
 }
 
-extension DataWorkerTests {
+extension DataProviderTests {
     
     func testFlowOfStores() {
         // Given
         let promise = expectation(description: "testFlowOfStores")
         
         // When
-        worker.pull {
+        provider.pull {
             defer { promise.fulfill() }
             
             guard case .success = $0 else {
@@ -45,7 +45,7 @@ extension DataWorkerTests {
 
 // MARK: - Subtypes
 
-private extension DataWorkerTests {
+private extension DataProviderTests {
     
     struct LocalConfig: NewsCore {
         
@@ -87,7 +87,7 @@ private extension DataWorkerTests {
     }
 }
 
-private extension DataWorkerTests {
+private extension DataProviderTests {
     
     class CacheStoreSpy: CacheStore {
         var lastUpdatedAt: Date?

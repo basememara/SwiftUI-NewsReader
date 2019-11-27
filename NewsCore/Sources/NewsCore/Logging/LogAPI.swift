@@ -49,7 +49,7 @@ public extension LogStore {
     }
 }
 
-public protocol LogWorkerType {
+public protocol LogProviderType {
     
     /// Log an entry to the destination.
     /// - Parameters:
@@ -118,7 +118,7 @@ public protocol LogWorkerType {
     func error(_ message: String, path: String, function: String, line: Int, context: [String: Any]?, completion: (() -> Void)?)
 }
 
-public extension LogWorkerType {
+public extension LogProviderType {
     
     func verbose(_ message: String, path: String = #file, function: String = #function, line: Int = #line, context: [String: Any]? = nil, completion: (() -> Void)? = nil) {
         write(.verbose, with: message, path: path, function: function, line: line, context: context, completion: completion)

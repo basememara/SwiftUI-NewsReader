@@ -9,9 +9,9 @@ import Foundation
 
 public struct RemoteNetworkStore: RemoteStore {
     private let articleRemote: ArticleRemote
-    private let log: LogWorkerType
+    private let log: LogProviderType
     
-    public init(articleRemote: ArticleRemote, log: LogWorkerType) {
+    public init(articleRemote: ArticleRemote, log: LogProviderType) {
         self.articleRemote = articleRemote
         self.log = log
     }

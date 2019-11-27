@@ -1,5 +1,5 @@
 //
-//  ArticleWorker.swift
+//  ArticleWProvider.swift
 //  NewsCore
 //
 //  Created by Basem Emara on 2019-11-13.
@@ -7,17 +7,17 @@
 
 import Foundation
 
-public struct ArticleWorker: ArticleWorkerType {
+public struct ArticleProvider: ArticleProviderType {
     private let store: ArticleCache
-    private let dataWorker: DataWorkerType
+    private let dataProvider: DataProviderType
     
-    public init(store: ArticleCache, dataWorker: DataWorkerType) {
+    public init(store: ArticleCache, dataProvider: DataProviderType) {
         self.store = store
-        self.dataWorker = dataWorker
+        self.dataProvider = dataProvider
     }
 }
 
-public extension ArticleWorker {
+public extension ArticleProvider {
     
     func fetch(with request: ArticleAPI.FetchRequest, completion: @escaping (Result<[Article], DataError>) -> Void) {
         let cacheRequest = ArticleAPI.CacheRequest()
@@ -29,7 +29,7 @@ public extension ArticleWorker {
             guard case .success = $0 else { return }
             
             // Sync remote updates to cache if applicable
-            self.dataWorker.pull {
+            self.dataProvider.pull {
                 // Validate if any updates that needs to be stored
                 guard case .success(let value) = $0, !value.articles.isEmpty else { return }
                 self.store.fetch(with: cacheRequest, completion: completion)
@@ -38,14 +38,14 @@ public extension ArticleWorker {
     }
 }
 
-public extension ArticleWorker {
+public extension ArticleProvider {
     
     func fetch(url: String, completion: @escaping (Result<Article, DataError>) -> Void) {
         store.fetch(url: url) { result in
             // Retrieve missing cache data from cloud if applicable
             if case .nonExistent? = result.error {
                 // Sync remote updates to cache if applicable
-                self.dataWorker.pull {
+                self.dataProvider.pull {
                     // Validate if any updates that needs to be stored
                     guard case .success(let value) = $0, value.articles.contains(where: { $0.url == url }) else {
                         completion(result)

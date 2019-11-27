@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FavoriteWorker: FavoriteWorkerType {
+public struct FavoriteProvider: FavoriteProviderType {
     private let store: FavoriteStore
     
     public init(store: FavoriteStore) {
@@ -15,7 +15,7 @@ public struct FavoriteWorker: FavoriteWorkerType {
     }
 }
 
-public extension FavoriteWorker {
+public extension FavoriteProvider {
     
     func fetchArticles(completion: @escaping (Result<[String], DataError>) -> Void) {
         store.fetchArticles(completion: completion)

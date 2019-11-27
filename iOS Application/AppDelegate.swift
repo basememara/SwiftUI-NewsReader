@@ -13,7 +13,7 @@ class AppDelegate: ApplicationPluggableDelegate {
     
     override func plugins() -> [ApplicationPlugin] {[
         LoggerPlugin(log: core.dependency()),
-        CachePlugin(dataWorker: core.dependency(), log: core.dependency())
+        CachePlugin(dataProvider: core.dependency(), log: core.dependency())
     ]}
 }
 

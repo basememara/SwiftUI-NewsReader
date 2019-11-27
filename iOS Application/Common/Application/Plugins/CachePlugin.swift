@@ -10,12 +10,12 @@ import BackgroundTasks
 import NewsCore
 
 final class CachePlugin: ApplicationPlugin {
-    private let dataWorker: DataWorkerType
-    private let log: LogWorkerType
+    private let dataProvider: DataProviderType
+    private let log: LogProviderType
     private let backgroundRefreshID = "io.zamzam.NewsReader.backgroundRefresh"
     
-    init(dataWorker: DataWorkerType, log: LogWorkerType) {
-        self.dataWorker = dataWorker
+    init(dataProvider: DataProviderType, log: LogProviderType) {
+        self.dataProvider = dataProvider
         self.log = log
     }
 }
@@ -23,8 +23,8 @@ final class CachePlugin: ApplicationPlugin {
 extension CachePlugin {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        dataWorker.configure()
-        dataWorker.pull() // Prefetch
+        dataProvider.configure()
+        dataProvider.pull() // Prefetch
         return true
     }
 }
@@ -38,7 +38,7 @@ extension CachePlugin {
             self?.log.info("Background fetching starting from `BGTaskScheduler`...")
             
             // Refresh local cache data from remote
-            self?.dataWorker.pull { [weak self] result in
+            self?.dataProvider.pull { [weak self] result in
                 switch result {
                 case .success:
                     self?.log.info("Background fetching completed")

@@ -17,22 +17,22 @@ public protocol NewsCore {
     func dependency() -> PreferencesType
     func dependencyStore() -> PreferencesStore
     
-    func dependency() -> DataWorkerType
+    func dependency() -> DataProviderType
     func dependency() -> SeedStore
     func dependency() -> RemoteStore
     func dependency() -> CacheStore
     
-    func dependency() -> ArticleWorkerType
+    func dependency() -> ArticleProviderType
     func dependency() -> ArticleCache
     func dependency() -> ArticleRemote
     
-    func dependency() -> FavoriteWorkerType
+    func dependency() -> FavoriteProviderType
     func dependency() -> FavoriteStore
     
     func dependency() -> NetworkServiceType
     func dependency() -> NetworkStore
     
-    func dependency() -> LogWorkerType
+    func dependency() -> LogProviderType
     func dependency() -> [LogStore]
     
     func dependency() -> NotificationCenter
@@ -59,12 +59,12 @@ public extension NewsCore {
     }
 }
 
-// MARK: - Workers
+// MARK: - Providers
 
 public extension NewsCore {
     
-    func dependency() -> DataWorkerType {
-        DataWorker(
+    func dependency() -> DataProviderType {
+        DataProvider(
             constants: dependency(),
             cacheStore: dependency(),
             seedStore: dependency(),
@@ -93,10 +93,10 @@ public extension NewsCore {
 
 public extension NewsCore {
     
-    func dependency() -> ArticleWorkerType {
-        ArticleWorker(
+    func dependency() -> ArticleProviderType {
+        ArticleProvider(
             store: dependency(),
-            dataWorker: dependency()
+            dataProvider: dependency()
         )
     }
     
@@ -123,8 +123,8 @@ public extension NewsCore {
 
 public extension NewsCore {
     
-    func dependency() -> FavoriteWorkerType {
-        FavoriteWorker(store: dependency())
+    func dependency() -> FavoriteProviderType {
+        FavoriteProvider(store: dependency())
     }
     
     func dependency() -> FavoriteStore {
@@ -145,8 +145,8 @@ public extension NewsCore {
 
 public extension NewsCore {
     
-    func dependency() -> LogWorkerType {
-        LogWorker(stores: dependency())
+    func dependency() -> LogProviderType {
+        LogProvider(stores: dependency())
     }
     
     func dependency() -> [LogStore] {

@@ -1,20 +1,20 @@
 //
-//  TestMiddleware.swift
+//  AnalyticsMiddleware.swift
 //  NewsReader iOS
 //
 //  Created by Basem Emara on 2019-11-26.
 //
 
-struct TestMiddleware: MiddlewareType {
+struct AnalyticsMiddleware: MiddlewareType {
     
     func execute(on action: ActionType) {
         switch action {
         case ListArticlesAction.loadArticles:
-            print("Test middleware triggered on action 'loadArticles'.")
+            print("Analytics middleware triggered on action 'loadArticles'.")
         case ShowArticleAction.toggleFavorite(let id):
-            print("Test middleware triggered on action 'toggleFavorite(\(id))'.")
+            print("Analytics middleware triggered on action 'toggleFavorite(\(id))'.")
         case ListFavoritesAction.loadFavorites:
-            print("Test middleware triggered on action 'loadFavorites'.")
+            print("Analytics middleware triggered on action 'loadFavorites'.")
         default:
             break
         }
