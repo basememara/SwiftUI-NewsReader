@@ -27,7 +27,7 @@ class SceneDelegate: ScenePluggableDelegate {
     ]}
 }
 
-// MARK: - Helpers
+// MARK: - Events
 
 extension SceneDelegate {
     
