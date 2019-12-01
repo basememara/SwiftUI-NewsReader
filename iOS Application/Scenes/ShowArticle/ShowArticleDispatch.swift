@@ -7,7 +7,7 @@
 
 import NewsCore
 
-struct ShowArticleDispatch {
+struct ShowArticleDispatch: DispatchType {
     private let favoriteProvider: FavoriteProviderType
     private let reducer: (ShowArticleAction) -> Void
     

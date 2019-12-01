@@ -7,7 +7,7 @@
 
 import NewsCore
 
-struct ListFavoritesDispatch {
+struct ListFavoritesDispatch: DispatchType {
     private let favoriteProvider: FavoriteProviderType
     private let reducer: (ListFavoritesAction) -> Void
     

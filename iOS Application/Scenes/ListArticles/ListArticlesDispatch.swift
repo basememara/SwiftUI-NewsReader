@@ -7,7 +7,7 @@
 
 import NewsCore
 
-struct ListArticlesDispatch {
+struct ListArticlesDispatch: DispatchType {
     private let articleProvider: ArticleProviderType
     private let reducer: (ListArticlesAction) -> Void
     

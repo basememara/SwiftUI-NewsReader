@@ -109,7 +109,7 @@ extension SceneRender {
 
 private extension SceneRender {
     
-    func make<Action, Reducer>(from reducer: Reducer) -> Dispatcher<Action>
+    func make<Action, Reducer>(from reducer: Reducer) -> (Action) -> Void
         where Reducer: ReducerType, Reducer.Action == Action {
             { action in
                 // Allow middleware to passively execute against action
