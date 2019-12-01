@@ -8,42 +8,15 @@
 import NewsCore
 
 struct ShowArticleReducer: ReducerType {
-    private let favoriteProvider: FavoriteProviderType
     
-    init(favoriteProvider: FavoriteProviderType) {
-        self.favoriteProvider = favoriteProvider
-    }
-}
-
-// MARK: - Dispatcher
-
-extension ShowArticleReducer {
-    
-    func apply(_ state: AppState, _ action: ShowArticleAction) {
+    func apply(_ state: AppState, _ action: ShowArticleAction) -> AppState {
         switch action {
-        case .toggleFavorite(let id):
-            toggleFavorite(id: id) { $0(state) }
+        case .toggleFavorite:
+            break
+        case .loadFavorites(let value):
+            state.favorites = value
         }
-    }
-}
-
-// MARK: - Logic
-
-private extension ShowArticleReducer {
-    
-    func toggleFavorite(id: String, mutate state: @escaping MutateStateFunction) {
-        favoriteProvider.toggleArticle(id: id)
         
-        favoriteProvider.fetchArticles {
-            guard case .success(let value) = $0 else {
-                // TODO: Handle error
-                return
-            }
-            
-            // Mutate state since now complete
-            state {
-                $0.favorites = value
-            }
-        }
+        return state
     }
 }

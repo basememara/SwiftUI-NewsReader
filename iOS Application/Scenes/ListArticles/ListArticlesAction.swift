@@ -8,6 +8,6 @@
 import NewsCore
 
 enum ListArticlesAction: ActionType {
-    case loadArticles
+    case loadArticles([Article])
     case clearArticles
 }

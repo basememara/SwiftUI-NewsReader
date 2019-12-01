@@ -11,7 +11,7 @@ import NewsCore
 struct ListFavoritesView: View {
     @ObservedObject var model: ListFavoritesModel
     
-    let dispatch: Dispatcher<ListFavoritesAction>
+    let dispatch: ListFavoritesDispatch?
     
     var body: some View {
         
@@ -25,12 +25,12 @@ struct ListFavoritesView: View {
                         return
                 }
                 
-                self.dispatch(.toggleFavorite(id: article.id))
+                self.dispatch?.toggleFavorite(id: article.id)
             }
         }
         .navigationBarTitle(Text("Favorites"))
         .onAppear {
-            self.dispatch(.loadFavorites)
+            self.dispatch?.fetchFavorites()
         }
     }
 }
@@ -83,9 +83,7 @@ struct ListFavoritesView_Previews: PreviewProvider {
                         )
                     ]
                 ),
-                dispatch: {
-                    print("Action: \($0)")
-                }
+                dispatch: nil
             )
         }
     }

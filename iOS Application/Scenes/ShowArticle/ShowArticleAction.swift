@@ -8,5 +8,6 @@
 import NewsCore
 
 enum ShowArticleAction: ActionType {
-    case toggleFavorite(id: String)
+    case toggleFavorite(String)
+    case loadFavorites([String])
 }

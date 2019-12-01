@@ -11,7 +11,7 @@ import NewsCore
 struct ListArticlesView: View {
     @ObservedObject var model: ListArticlesModel
     
-    let dispatch: Dispatcher<ListArticlesAction>
+    let dispatch: ListArticlesDispatch?
     let render: ListArticlesRender?
     
     var body: some View {
@@ -29,15 +29,15 @@ struct ListArticlesView: View {
             Button(
                 action: {
                     self.model.articles.isEmpty
-                        ? self.dispatch(.loadArticles)
-                        : self.dispatch(.clearArticles)
+                        ? self.dispatch?.fetchArticles()
+                        : self.dispatch?.clearArticles()
                 },
                 label: {
                     Text(self.model.articles.isEmpty ? "Load" : "Clear").font(.body)
                 }
             )
         ).onAppear {
-            self.dispatch(.loadArticles)
+            self.dispatch?.fetchArticles()
         }
     }
 }
@@ -90,9 +90,7 @@ struct ListArticlesView_Previews: PreviewProvider {
                         )
                     ]
                 ),
-                dispatch: {
-                    print("Action: \($0)")
-                },
+                dispatch: nil,
                 render: nil
             )
         }

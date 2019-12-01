@@ -16,7 +16,7 @@ struct ShowArticleView: View {
     @State var quantity: Int
     @State var selection: String
     
-    let dispatch: Dispatcher<ShowArticleAction>
+    let dispatch: ShowArticleDispatch?
     
     private let dataFormatter = DateFormatter().with {
         $0.dateStyle = .medium
@@ -63,7 +63,7 @@ struct ShowArticleView: View {
         .navigationBarTitle(Text("Article"))
         .navigationBarItems(trailing:
             Button(action: {
-                self.dispatch(.toggleFavorite(id: self.model.article.id)) }
+                self.dispatch?.toggleFavorite(id: self.model.article.id) }
             ) {
                 Text(model.isFavorite ? "Unfavorite" : "Favorite").font(.body)
             }
@@ -96,7 +96,7 @@ struct ShowArticleView_Previews: PreviewProvider {
                 date: Date(),
                 quantity: 99,
                 selection: "Value 1",
-                dispatch: { _ in }
+                dispatch: nil
             )
         }
     }

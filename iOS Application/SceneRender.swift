@@ -40,10 +40,9 @@ extension SceneRender {
             // Expose only some of the state by wrapping it
             model: ListArticlesModel(parent: state),
             // Views uses it to dispatch actions to the reducer
-            dispatch: make(from:
-                ListArticlesReducer(
-                    articleProvider: core.dependency()
-                )
+            dispatch: ListArticlesDispatch(
+                articleProvider: core.dependency(),
+                reducer: make(from: ListArticlesReducer())
             ),
             // Expose only some of the scene render by wrapping it
             render: ListArticlesRender(parent: self)
@@ -63,10 +62,9 @@ extension SceneRender {
             date: Date(),
             quantity: 99,
             selection: "Value 1",
-            dispatch: make(from:
-                ShowArticleReducer(
-                    favoriteProvider: core.dependency()
-                )
+            dispatch: ShowArticleDispatch(
+                favoriteProvider: core.dependency(),
+                reducer: make(from: ShowArticleReducer())
             )
         )
     }
@@ -77,10 +75,9 @@ extension SceneRender {
     func listFavorites() -> some View {
         ListFavoritesView(
             model: ListFavoritesModel(parent: state),
-            dispatch: make(from:
-                ListFavoritesReducer(
-                    favoriteProvider: core.dependency()
-                )
+            dispatch: ListFavoritesDispatch(
+                favoriteProvider: core.dependency(),
+                reducer: make(from: ListFavoritesReducer())
             )
         )
     }
@@ -112,13 +109,14 @@ extension SceneRender {
 
 private extension SceneRender {
     
-    func make<Action, Reducer>(from reducer: Reducer) -> Dispatcher<Action> where Reducer: ReducerType, Reducer.Action == Action {
-        { action in
-            // Allow middleware to passively execute against action
-            self.middleware.forEach { $0.execute(on: action) }
-            
-            // Mutate the state for the action
-            reducer.apply(self.state, action)
-        }
+    func make<Action, Reducer>(from reducer: Reducer) -> Dispatcher<Action>
+        where Reducer: ReducerType, Reducer.Action == Action {
+            { action in
+                // Allow middleware to passively execute against action
+                self.middleware.forEach { $0.execute(on: action) }
+                
+                // Mutate the state for the action
+                reducer.apply(self.state, action)
+            }
     }
 }
