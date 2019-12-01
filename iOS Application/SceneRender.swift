@@ -109,6 +109,7 @@ extension SceneRender {
 
 private extension SceneRender {
     
+    /// Creates action closure for view use to decouple dispatchers and reduers.
     func make<Action, Reducer>(from reducer: Reducer) -> (Action) -> Void
         where Reducer: ReducerType, Reducer.Action == Action {
             { action in
