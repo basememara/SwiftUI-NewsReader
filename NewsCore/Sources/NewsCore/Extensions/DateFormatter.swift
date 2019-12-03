@@ -18,8 +18,24 @@ public extension DateFormatter {
         self.init()
         
         self.calendar = Calendar(identifier: .iso8601)
-        self.locale = Locale(identifier: "en_US_POSIX")
-        self.timeZone = TimeZone(identifier: "GMT")
+        self.locale = .posix
+        self.timeZone = .posix
         self.dateFormat = dateFormat
+    }
+}
+
+public extension String.StringInterpolation {
+    
+    private static let formatter = DateFormatter(
+        iso8601Format: "yyyy-MM-dd HH:mm:ss.SSS"
+    )
+    
+    /// Appends a date formatted timestamp to the interpolation.
+    ///
+    ///     print("Console log at \(timestamp: Date())")
+    ///
+    /// - Parameter timestamp: The date to format.
+    mutating func appendInterpolation(timestamp: Date) {
+        appendLiteral(Self.formatter.string(from: timestamp))
     }
 }

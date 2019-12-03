@@ -8,7 +8,7 @@
 import UIKit
 import NewsCore
 
-final class LoggerPlugin {
+struct LoggerPlugin {
     private let log: LogProviderType
     
     init(log: LogProviderType) {

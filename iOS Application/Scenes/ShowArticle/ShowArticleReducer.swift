@@ -9,7 +9,7 @@ import NewsCore
 
 struct ShowArticleReducer: ReducerType {
     
-    func apply(_ state: AppState, _ action: ShowArticleAction) -> AppState {
+    func reduce(_ state: AppState, _ action: ShowArticleAction) -> AppState {
         switch action {
         case .toggleFavorite:
             break

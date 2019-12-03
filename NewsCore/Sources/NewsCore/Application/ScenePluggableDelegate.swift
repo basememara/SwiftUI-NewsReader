@@ -22,7 +22,7 @@ import UIKit
 ///
 /// Each scene plugin has access to the `SceneDelegate` lifecycle events:
 ///
-///     final class LoggerPlugin: ScenePlugin {
+///     struct LoggerPlugin: ScenePlugin {
 ///         private let log = Logger()
 ///
 ///         func sceneWillEnterForeground() {

@@ -9,7 +9,7 @@ import NewsCore
 
 struct ListArticlesReducer: ReducerType {
     
-    func apply(_ state: AppState, _ action: ListArticlesAction) -> AppState {
+    func reduce(_ state: AppState, _ action: ListArticlesAction) -> AppState {
         switch action {
         case .loadArticles(let value):
             state.articles = value

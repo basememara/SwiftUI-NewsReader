@@ -9,7 +9,7 @@ import UIKit
 import BackgroundTasks
 import NewsCore
 
-final class CachePlugin: ApplicationPlugin {
+struct CachePlugin: ApplicationPlugin {
     private let dataProvider: DataProviderType
     private let log: LogProviderType
     private let backgroundRefreshID = "io.zamzam.NewsReader.backgroundRefresh"
@@ -33,24 +33,24 @@ extension CachePlugin {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Enable background fetch for refreshing local cache
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: backgroundRefreshID, using: nil) { [weak self] in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: backgroundRefreshID, using: nil) {
             guard let task = $0 as? BGAppRefreshTask else { return }
-            self?.log.info("Background fetching starting from `BGTaskScheduler`...")
+            self.log.info("Background fetching starting from `BGTaskScheduler`...")
             
             // Refresh local cache data from remote
-            self?.dataProvider.pull { [weak self] result in
+            self.dataProvider.pull { result in
                 switch result {
                 case .success:
-                    self?.log.info("Background fetching completed")
+                    self.log.info("Background fetching completed")
                     task.setTaskCompleted(success: true)
                 case .failure(let error):
                     guard case .nonExistent = error else {
-                        self?.log.error("Background fetching failed: \(error)")
+                        self.log.error("Background fetching failed: \(error)")
                         task.setTaskCompleted(success: false)
                         break
                     }
                     
-                    self?.log.info("Background fetching completed with no data")
+                    self.log.info("Background fetching completed with no data")
                     task.setTaskCompleted(success: true)
                 }
             }

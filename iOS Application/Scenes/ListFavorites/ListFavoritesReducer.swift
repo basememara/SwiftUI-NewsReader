@@ -9,7 +9,7 @@ import NewsCore
 
 struct ListFavoritesReducer: ReducerType {
     
-    func apply(_ state: AppState, _ action: ListFavoritesAction) -> AppState {
+    func reduce(_ state: AppState, _ action: ListFavoritesAction) -> AppState {
         switch action {
         case .loadFavorites(let value):
             state.favorites = value
