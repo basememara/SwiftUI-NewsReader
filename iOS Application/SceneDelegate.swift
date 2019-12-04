@@ -10,16 +10,6 @@ import NewsCore
 import SwiftUI
 
 class SceneDelegate: ScenePluggableDelegate {
-    
-    /// Root builder for all scenes. Create views only through scene renders.
-    private lazy var render = SceneRender(
-        core: core,
-        state: state,
-        middleware: [
-            AnalyticsMiddleware()
-        ]
-    )
-    
     private lazy var log: LogProviderType = core.dependency()
         
     override func plugins() -> [ScenePlugin] {[

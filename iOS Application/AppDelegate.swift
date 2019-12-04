@@ -19,16 +19,35 @@ class AppDelegate: ApplicationPluggableDelegate {
 
 // MARK: - Environment Components
 
-private extension UIApplication {
+private enum Root {
+    
+    /// Root dependency injection container
     static let core = AppCore()
+    
+    /// Root application storage
     static let state = AppState()
+    
+    /// Root builder for all scenes.
+    ///
+    ///     NavigationView(
+    ///         render.listArticles()
+    ///     )
+    ///
+    /// Create views only through scene renders.
+    static let render = SceneRender(
+        core: core,
+        state: state,
+        middleware: [ // All actions pass through
+            AnalyticsMiddleware()
+        ]
+    )
 }
 
-extension UIApplicationDelegate {
-    var core: NewsCore { UIApplication.core }
+private extension UIApplicationDelegate {
+    var core: NewsCore { Root.core }
 }
 
 extension UISceneDelegate {
-    var core: NewsCore { UIApplication.core }
-    var state: AppState { UIApplication.state }
+    var core: NewsCore { Root.core }
+    var render: SceneRender { Root.render }
 }
