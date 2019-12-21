@@ -36,11 +36,7 @@ extension SceneRender {
 extension SceneRender {
     
     func listArticles() -> some View {
-        let model = state.listArticles ?? {
-            let newValue = ListArticlesModel(articles: [])
-            state.listArticles = newValue
-            return newValue
-        }()
+        let model = state.listArticles
         
         return ListArticlesView(
             // Expose only some of the state by wrapping it
@@ -59,22 +55,17 @@ extension SceneRender {
 extension SceneRender {
     
     func showArticle(id: String) -> some View {
-        guard let article = state.listArticles?.articles
+        guard let article = state.listArticles.articles
             .first(where: { $0.id == id }) else {
                 return ShowErrorView()
                     .eraseToAnyView()
         }
         
-        let model = state.showArticle ?? {
-            let newValue = ShowArticleModel(
-                article: article,
-                isFavorite: state.listFavorites?.favorites
-                    .contains { $0.id == id } ?? false
-            )
-            
-            state.showArticle = newValue
-            return newValue
-        }()
+        let model = ShowArticleModel(
+            article: article,
+            isFavorite: state.listFavorites.favorites
+                .contains { $0.id == id }
+        )
         
         return ShowArticleView(
             model: model,
@@ -94,11 +85,7 @@ extension SceneRender {
 extension SceneRender {
     
     func listFavorites() -> some View {
-        let model = state.listFavorites ?? {
-            let newValue = ListFavoritesModel(articles: [])
-            state.listFavorites = newValue
-            return newValue
-        }()
+        let model = state.listFavorites
         
         return ListFavoritesView(
             model: model,
@@ -128,7 +115,7 @@ extension SceneRender {
     
     func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap
-        showArticle(id: state.listArticles!.articles
+        showArticle(id: state.listArticles.articles
             .first(where: { $0.url == url.absoluteString })!.id)
     }
 }

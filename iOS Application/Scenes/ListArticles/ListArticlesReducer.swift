@@ -20,14 +20,8 @@ struct ListArticlesReducer: ReducerType {
         }
         
         // Mutate global state to propagate changes
-        if state.listArticles == nil {
-            state.listArticles = ListArticlesModel(
-                articles: articles
-            )
-        } else {
-            state.listArticles?.articles = articles
-        }
+        state.listArticles.articles = articles
         
-        return state.listArticles! // TODO: Fix unwrapping
+        return state.listArticles
     }
 }
