@@ -18,7 +18,7 @@ struct ShowArticleView: View {
     
     let action: ShowArticleActionCreator?
     
-    private let dataFormatter = DateFormatter().with {
+    private let dateFormatter = DateFormatter().with {
         $0.dateStyle = .medium
     }
     
@@ -37,7 +37,7 @@ struct ShowArticleView: View {
                 TextField(
                     "Formatted Date",
                     value: $date,
-                    formatter: dataFormatter
+                    formatter: dateFormatter
                 )
                 DatePicker(selection: $date) {
                     Text("Published Date")

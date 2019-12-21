@@ -7,6 +7,3 @@
 
 /// The storage.
 protocol StateType {}
-
-/// Closure for mutating application state in reducers
-typealias MutateStateFunction = ((AppState) -> Void) -> Void

@@ -112,7 +112,7 @@ private extension SceneRender {
     /// Creates action closure for the view to send to the reducer. This separation decouples actions and reducers.
     func action<Action, Reducer>(to reducer: Reducer) -> (Action) -> Void
         where Reducer: ReducerType, Reducer.Action == Action {
-            { action in
+            return { action in
                 // Allow middleware to passively execute against action
                 self.middleware.forEach { $0.execute(on: action) }
                 
