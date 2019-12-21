@@ -9,14 +9,25 @@ import NewsCore
 
 struct ShowArticleReducer: ReducerType {
     
-    func reduce(_ state: AppState, _ action: ShowArticleAction) -> AppState {
+    func reduce(_ state: AppState, _ action: ShowArticleAction) -> ShowArticleModel {
         switch action {
-        case .toggleFavorite:
-            break
-        case .loadFavorites(let value):
-            state.favorites = value
+        case .toggleFavorite(let id):
+            state.showArticle?.isFavorite.toggle()
+            
+            guard let article = state.showArticle?.article else {
+                break
+            }
+            
+            // TODO: Split into multiple reducers?
+            if let index = state.listFavorites?.favorites
+                .firstIndex(where: { $0.id == id })
+            {
+                state.listFavorites?.favorites[index] = article
+            } else {
+                state.listFavorites?.favorites.append(article)
+            }
         }
         
-        return state
+        return state.showArticle! // TODO: Fix unwrapping
     }
 }

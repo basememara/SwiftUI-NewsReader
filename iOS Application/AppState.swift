@@ -12,6 +12,7 @@ import NewsCore
 ///
 /// Only update on main thread since views are observing changes.
 class AppState: StateType, ObservableObject {
-    @Published var articles: [Article] = []
-    @Published var favorites: [String] = []
+    var listArticles: ListArticlesModel?
+    var showArticle: ShowArticleModel?
+    var listFavorites: ListFavoritesModel?
 }
