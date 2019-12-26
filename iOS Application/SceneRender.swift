@@ -36,15 +36,13 @@ extension SceneRender {
 extension SceneRender {
     
     func listArticles() -> some View {
-        let model = state.listArticles
-        
-        return ListArticlesView(
+        ListArticlesView(
             // Expose only some of the state by wrapping it
-            model: model,
+            model: state.listArticles,
             // Views use this to dispatch actions to the reducer
             action: ListArticlesActionCreator(
                 articleProvider: core.dependency(),
-                dispatch: action(to: ListArticlesReducer(), with: model)
+                dispatch: action(to: ListArticlesReducer())
             ),
             // Expose only some of the scene render by wrapping it
             render: ListArticlesRender(parent: self)
@@ -61,21 +59,19 @@ extension SceneRender {
                     .eraseToAnyView()
         }
         
-        let model = ShowArticleModel(
-            article: article,
-            isFavorite: state.listFavorites.favorites
-                .contains { $0.id == id }
-        )
-        
         return ShowArticleView(
-            model: model,
+            model: ShowArticleModel(
+                article: article,
+                isFavorite: state.listFavorites.favorites
+                    .contains { $0.id == id }
+            ),
             text: "Test string",
             date: Date(),
             quantity: 99,
             selection: "Value 1",
             action: ShowArticleActionCreator(
                 favoriteProvider: core.dependency(),
-                dispatch: action(to: ShowArticleReducer(), with: model)
+                dispatch: action(to: ShowArticleReducer())
             )
         )
         .eraseToAnyView()
@@ -85,13 +81,11 @@ extension SceneRender {
 extension SceneRender {
     
     func listFavorites() -> some View {
-        let model = state.listFavorites
-        
-        return ListFavoritesView(
-            model: model,
+        ListFavoritesView(
+            model: state.listFavorites,
             action: ListFavoritesActionCreator(
                 favoriteProvider: core.dependency(),
-                dispatch: action(to: ListFavoritesReducer(), with: model)
+                dispatch: action(to: ListFavoritesReducer())
             )
         )
     }
@@ -125,8 +119,8 @@ extension SceneRender {
 private extension SceneRender {
     
     /// Creates action closure for the view to send to the reducer. This separation decouples actions and reducers.
-    func action<Action, Reducer, Model>(to reducer: Reducer, with model: Model) -> (Action) -> Void
-        where Reducer: ReducerType, Reducer.Action == Action, Reducer.Model == Model {
+    func action<Action, Reducer>(to reducer: Reducer) -> (Action) -> Void
+        where Reducer: ReducerType, Reducer.Action == Action {
             return { action in
                 // Allow middleware to passively execute against action
                 self.middleware.forEach { $0.execute(on: action) }

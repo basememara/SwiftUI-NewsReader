@@ -9,7 +9,7 @@ import NewsCore
 
 struct ListArticlesReducer: ReducerType {
     
-    func reduce(_ state: AppState, _ action: ListArticlesAction) -> ListArticlesModel {
+    func reduce(_ state: AppState, _ action: ListArticlesAction) -> AppState {
         let articles: [Article]
         
         switch action {
@@ -22,6 +22,6 @@ struct ListArticlesReducer: ReducerType {
         // Mutate global state to propagate changes
         state.listArticles.articles = articles
         
-        return state.listArticles
+        return state
     }
 }

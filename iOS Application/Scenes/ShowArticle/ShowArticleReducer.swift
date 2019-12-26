@@ -9,7 +9,7 @@ import NewsCore
 
 struct ShowArticleReducer: ReducerType {
     
-    func reduce(_ state: AppState, _ action: ShowArticleAction) -> ShowArticleModel {
+    func reduce(_ state: AppState, _ action: ShowArticleAction) -> AppState {
         switch action {
         case .toggleFavorite(let id):
             state.showArticle.isFavorite.toggle()
@@ -26,6 +26,6 @@ struct ShowArticleReducer: ReducerType {
             }
         }
         
-        return state.showArticle
+        return state
     }
 }

@@ -9,7 +9,7 @@ import NewsCore
 
 struct ListFavoritesReducer: ReducerType {
     
-    func reduce(_ state: AppState, _ action: ListFavoritesAction) -> ListFavoritesModel {
+    func reduce(_ state: AppState, _ action: ListFavoritesAction) -> AppState {
         switch action {
         case .loadFavorites(let value):
             let articles = state.listArticles.articles
@@ -35,6 +35,6 @@ struct ListFavoritesReducer: ReducerType {
             state.showArticle.isFavorite.toggle()
         }
         
-        return state.listFavorites
+        return state
     }
 }
