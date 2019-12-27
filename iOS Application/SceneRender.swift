@@ -38,7 +38,7 @@ extension SceneRender {
     func listArticles() -> some View {
         ListArticlesView(
             // Expose only some of the state by wrapping it
-            model: state.listArticles,
+            model: ListArticlesModel(root: state),
             // Views use this to dispatch actions to the reducer
             action: ListArticlesActionCreator(
                 articleProvider: core.dependency(),
@@ -53,16 +53,11 @@ extension SceneRender {
 extension SceneRender {
     
     func showArticle(id: String) -> some View {
-        guard let article = state.listArticles.articles
-            .first(where: { $0.id == id }) else {
-                return ShowErrorView()
-                    .eraseToAnyView()
-        }
-        
-        return ShowArticleView(
-            article: article,
-            isFavorite: state.listFavorites.favorites
-                .contains { $0.id == id },
+        ShowArticleView(
+            model: ShowArticleModel(
+                root: state,
+                id: id
+            ),
             action: ShowArticleActionCreator(
                 favoriteProvider: core.dependency(),
                 dispatch: action(
@@ -73,7 +68,6 @@ extension SceneRender {
                 )
             )
         )
-        .eraseToAnyView()
     }
 }
 
@@ -81,7 +75,7 @@ extension SceneRender {
     
     func listFavorites() -> some View {
         ListFavoritesView(
-            model: state.listFavorites,
+            model: ListFavoritesModel(root: state),
             action: ListFavoritesActionCreator(
                 favoriteProvider: core.dependency(),
                 dispatch: action(to: ListFavoritesReducer())
@@ -112,9 +106,14 @@ extension SceneRender {
 extension SceneRender {
     
     func fetch(for url: URL) -> some View {
-        // TODO: Build better query, don't force unwrap
-        showArticle(id: state.listArticles.articles
-            .first(where: { $0.url == url.absoluteString })!.id)
+        guard let article = state.articles
+            .first(where: { $0.url == url.absoluteString }) else {
+                return ShowErrorView()
+                    .eraseToAnyView()
+        }
+        
+        return showArticle(id: article.id)
+            .eraseToAnyView()
     }
 }
 

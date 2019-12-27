@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ShowSettingsView: View {
-    @State var text: String
-    @State var date: Date
-    @State var quantity: Int
-    @State var selection: String
+    @State private(set) var text: String
+    @State private(set) var date: Date
+    @State private(set) var quantity: Int
+    @State private(set) var selection: String
     
     private let dateFormatter = DateFormatter().with {
         $0.dateStyle = .medium

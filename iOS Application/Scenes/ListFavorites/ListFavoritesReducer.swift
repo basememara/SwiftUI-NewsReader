@@ -12,24 +12,21 @@ struct ListFavoritesReducer: ReducerType {
     func reduce(_ state: AppState, _ action: ListFavoritesAction) {
         switch action {
         case .loadFavorites(let value):
-            let articles = state.listArticles.articles
+            let favorites = state.articles
                 .filter { value.contains($0.id) }
             
             // Mutate global state to propagate changes
-            state.listFavorites.favorites = articles
+            state.favorites = favorites.map { $0.id }
         case .toggleFavorite(let id):
-            guard let article = state.listArticles.articles
-                .first(where: { $0.id == id }) else {
+            // Mutate global state to propagate changes
+            guard state.articles.contains(where: { $0.id == id }),
+                !state.favorites.contains(where: { $0 == id }) else {
+                    // Remove non-existing or toggled article
+                    state.favorites.removeAll { $0 == id }
                     break
             }
             
-            if let index = state.listFavorites.favorites
-                .firstIndex(where: { $0.id == id })
-            {
-                state.listFavorites.favorites[index] = article
-            } else {
-                state.listFavorites.favorites.append(article)
-            }
+            state.favorites.append(id)
         }
     }
 }

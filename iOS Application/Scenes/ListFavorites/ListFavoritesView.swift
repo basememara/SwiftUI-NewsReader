@@ -9,7 +9,7 @@ import SwiftUI
 import NewsCore
 
 struct ListFavoritesView: View {
-    @ObservedObject var model: ListFavoritesModel
+    @ObservedObject private(set) var model: ListFavoritesModel
     
     let action: ListFavoritesActionCreator?
     
