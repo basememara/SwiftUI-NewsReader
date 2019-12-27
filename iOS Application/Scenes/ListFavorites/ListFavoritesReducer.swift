@@ -30,9 +30,6 @@ struct ListFavoritesReducer: ReducerType {
             } else {
                 state.listFavorites.favorites.append(article)
             }
-            
-            // TODO: Split into multiple reducers?
-            state.showArticle.isFavorite.toggle()
         }
         
         return state

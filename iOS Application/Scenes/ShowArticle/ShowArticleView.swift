@@ -9,18 +9,19 @@ import SwiftUI
 import NewsCore
 
 struct ShowArticleView: View {
-    @ObservedObject var model: ShowArticleModel
+    @State var article: Article
+    @State var isFavorite: Bool
     
     let action: ShowArticleActionCreator?
     
     var body: some View {
-        Text(model.article.content ?? "")
-            .navigationBarTitle(Text(model.article.title))
+        Text(article.content ?? "")
+            .navigationBarTitle(Text(article.title))
             .navigationBarItems(trailing:
                 Button(
-                    action: { self.action?.toggleFavorite(id: self.model.article.id) }
+                    action: { self.action?.toggleFavorite(id: self.article.id) }
                 ) {
-                    Text(model.isFavorite ? "Unfavorite" : "Favorite").font(.body)
+                    Text(isFavorite ? "Unfavorite" : "Favorite").font(.body)
                 }
             )
     }
@@ -31,22 +32,20 @@ struct ShowArticleView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ShowArticleView(
-                model: ShowArticleModel(
-                    article: Article(
-                        url: "http://example.com/1",
-                        title: "Example article 1",
-                        content: "This is a test content for 1.",
-                        excerpt: "This is a test excecrpt",
-                        image: nil,
-                        author: nil,
-                        publishedAt: Date(),
-                        source: ArticleSource(
-                            id: "google-news",
-                            name: "Google News"
-                        )
-                    ),
-                    isFavorite: false
+                article: Article(
+                    url: "http://example.com/1",
+                    title: "Example article 1",
+                    content: "This is a test content for 1.",
+                    excerpt: "This is a test excecrpt",
+                    image: nil,
+                    author: nil,
+                    publishedAt: Date(),
+                    source: ArticleSource(
+                        id: "google-news",
+                        name: "Google News"
+                    )
                 ),
+                isFavorite: false,
                 action: nil
             )
         }

@@ -8,22 +8,17 @@
 import NewsCore
 
 struct ShowArticleReducer: ReducerType {
+    private let listFavoritesReducer: ListFavoritesReducer
+    
+    init(listFavoritesReducer: ListFavoritesReducer) {
+        self.listFavoritesReducer = listFavoritesReducer
+    }
     
     func reduce(_ state: AppState, _ action: ShowArticleAction) -> AppState {
         switch action {
         case .toggleFavorite(let id):
-            state.showArticle.isFavorite.toggle()
-            
-            let article = state.showArticle.article
-            
-            // TODO: Split into multiple reducers?
-            if let index = state.listFavorites.favorites
-                .firstIndex(where: { $0.id == id })
-            {
-                state.listFavorites.favorites[index] = article
-            } else {
-                state.listFavorites.favorites.append(article)
-            }
+            // TODO: Smelly; better way to call multiple reducers?
+            _ = listFavoritesReducer.reduce(state, .toggleFavorite(id))
         }
         
         return state

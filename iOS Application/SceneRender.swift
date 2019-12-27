@@ -60,14 +60,17 @@ extension SceneRender {
         }
         
         return ShowArticleView(
-            model: ShowArticleModel(
-                article: article,
-                isFavorite: state.listFavorites.favorites
-                    .contains { $0.id == id }
-            ),
+            article: article,
+            isFavorite: state.listFavorites.favorites
+                .contains { $0.id == id },
             action: ShowArticleActionCreator(
                 favoriteProvider: core.dependency(),
-                dispatch: action(to: ShowArticleReducer())
+                dispatch: action(
+                    to: ShowArticleReducer(
+                        // TODO: Smelly
+                        listFavoritesReducer: ListFavoritesReducer()
+                    )
+                )
             )
         )
         .eraseToAnyView()
