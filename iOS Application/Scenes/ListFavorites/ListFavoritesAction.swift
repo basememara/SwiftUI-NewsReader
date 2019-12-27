@@ -45,6 +45,6 @@ extension ListFavoritesActionCreator {
     
     func toggleFavorite(id: String) {
         favoriteProvider.toggleArticle(id: id)
-        fetchFavorites() // TODO: Optimize
+        dispatch(.toggleFavorite(id))
     }
 }

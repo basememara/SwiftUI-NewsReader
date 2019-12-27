@@ -20,6 +20,6 @@ struct ListArticlesReducer: ReducerType {
         }
         
         // Mutate global state to propagate changes
-        state.listArticles.articles = articles
+        state.articles = articles
     }
 }
