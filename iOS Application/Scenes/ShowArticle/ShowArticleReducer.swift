@@ -14,13 +14,11 @@ struct ShowArticleReducer: ReducerType {
         self.listFavoritesReducer = listFavoritesReducer
     }
     
-    func reduce(_ state: AppState, _ action: ShowArticleAction) -> AppState {
+    func reduce(_ state: AppState, _ action: ShowArticleAction) {
         switch action {
         case .toggleFavorite(let id):
             // TODO: Smelly; better way to call multiple reducers?
-            _ = listFavoritesReducer.reduce(state, .toggleFavorite(id))
+            listFavoritesReducer.reduce(state, .toggleFavorite(id))
         }
-        
-        return state
     }
 }
