@@ -9,7 +9,7 @@ import SwiftUI
 import NewsCore
 
 struct ShowArticleView: View {
-    @ObservedObject var model: ShowArticleModel
+    @ObservedObject private(set) var model: ShowArticleModel
     
     let action: ShowArticleActionCreator?
     
