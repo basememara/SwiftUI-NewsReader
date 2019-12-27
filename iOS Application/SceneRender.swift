@@ -38,7 +38,7 @@ extension SceneRender {
     func listArticles() -> some View {
         ListArticlesView(
             // Expose only some of the state by wrapping it
-            model: ListArticlesModel(parent: state),
+            model: state.listArticles,
             // Views use this to dispatch actions to the reducer
             action: ListArticlesActionCreator(
                 articleProvider: core.dependency(),
@@ -53,20 +53,27 @@ extension SceneRender {
 extension SceneRender {
     
     func showArticle(id: String) -> some View {
-        ShowArticleView(
-            model: ShowArticleModel(
-                parent: state,
-                id: id
-            ),
-            text: "Test string",
-            date: Date(),
-            quantity: 99,
-            selection: "Value 1",
+        guard let article = state.listArticles.articles
+            .first(where: { $0.id == id }) else {
+                return ShowErrorView()
+                    .eraseToAnyView()
+        }
+        
+        return ShowArticleView(
+            article: article,
+            isFavorite: state.listFavorites.favorites
+                .contains { $0.id == id },
             action: ShowArticleActionCreator(
                 favoriteProvider: core.dependency(),
-                dispatch: action(to: ShowArticleReducer())
+                dispatch: action(
+                    to: ShowArticleReducer(
+                        // TODO: Smelly
+                        listFavoritesReducer: ListFavoritesReducer()
+                    )
+                )
             )
         )
+        .eraseToAnyView()
     }
 }
 
@@ -74,7 +81,7 @@ extension SceneRender {
     
     func listFavorites() -> some View {
         ListFavoritesView(
-            model: ListFavoritesModel(parent: state),
+            model: state.listFavorites,
             action: ListFavoritesActionCreator(
                 favoriteProvider: core.dependency(),
                 dispatch: action(to: ListFavoritesReducer())
@@ -93,7 +100,12 @@ extension SceneRender {
 extension SceneRender {
     
     func showSettings() -> some View {
-        ShowSettingsView()
+        ShowSettingsView(
+            text: "Test string",
+            date: Date(),
+            quantity: 99,
+            selection: "Value 1"
+        )
     }
 }
 
@@ -101,7 +113,8 @@ extension SceneRender {
     
     func fetch(for url: URL) -> some View {
         // TODO: Build better query, don't force unwrap
-        showArticle(id: state.articles.first(where: { $0.url == url.absoluteString })!.id)
+        showArticle(id: state.listArticles.articles
+            .first(where: { $0.url == url.absoluteString })!.id)
     }
 }
 

@@ -9,7 +9,6 @@ import NewsCore
 
 enum ShowArticleAction: ActionType {
     case toggleFavorite(String)
-    case loadFavorites([String])
 }
 
 // MARK: - Logic
@@ -32,14 +31,5 @@ extension ShowArticleActionCreator {
     func toggleFavorite(id: String) {
         favoriteProvider.toggleArticle(id: id)
         dispatch(.toggleFavorite(id))
-        
-        favoriteProvider.fetchArticles {
-            guard case .success(let value) = $0 else {
-                // TODO: Handle error
-                return
-            }
-            
-            self.dispatch(.loadFavorites(value))
-        }
     }
 }

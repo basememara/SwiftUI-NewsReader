@@ -9,14 +9,17 @@ import NewsCore
 
 struct ListArticlesReducer: ReducerType {
     
-    func reduce(_ state: AppState, _ action: ListArticlesAction) -> AppState {
+    func reduce(_ state: AppState, _ action: ListArticlesAction) {
+        let articles: [Article]
+        
         switch action {
         case .loadArticles(let value):
-            state.articles = value
+            articles = value
         case .clearArticles:
-            state.articles = []
+            articles = []
         }
         
-        return state
+        // Mutate global state to propagate changes
+        state.listArticles.articles = articles
     }
 }

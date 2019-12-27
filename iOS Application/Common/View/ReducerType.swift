@@ -13,6 +13,5 @@ protocol ReducerType {
     /// - Parameters:
     ///   - state: The global state for the application
     ///   - action: The action to perform on the state.
-    @discardableResult
-    func reduce(_ state: AppState, _ action: Action) -> AppState
+    func reduce(_ state: AppState, _ action: Action)
 }

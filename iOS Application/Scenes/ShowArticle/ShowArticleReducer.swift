@@ -8,15 +8,17 @@
 import NewsCore
 
 struct ShowArticleReducer: ReducerType {
+    private let listFavoritesReducer: ListFavoritesReducer
     
-    func reduce(_ state: AppState, _ action: ShowArticleAction) -> AppState {
+    init(listFavoritesReducer: ListFavoritesReducer) {
+        self.listFavoritesReducer = listFavoritesReducer
+    }
+    
+    func reduce(_ state: AppState, _ action: ShowArticleAction) {
         switch action {
-        case .toggleFavorite:
-            break
-        case .loadFavorites(let value):
-            state.favorites = value
+        case .toggleFavorite(let id):
+            // TODO: Smelly; better way to call multiple reducers?
+            listFavoritesReducer.reduce(state, .toggleFavorite(id))
         }
-        
-        return state
     }
 }
