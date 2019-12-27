@@ -65,10 +65,6 @@ extension SceneRender {
                 isFavorite: state.listFavorites.favorites
                     .contains { $0.id == id }
             ),
-            text: "Test string",
-            date: Date(),
-            quantity: 99,
-            selection: "Value 1",
             action: ShowArticleActionCreator(
                 favoriteProvider: core.dependency(),
                 dispatch: action(to: ShowArticleReducer())
@@ -101,7 +97,12 @@ extension SceneRender {
 extension SceneRender {
     
     func showSettings() -> some View {
-        ShowSettingsView()
+        ShowSettingsView(
+            text: "Test string",
+            date: Date(),
+            quantity: 99,
+            selection: "Value 1"
+        )
     }
 }
 
