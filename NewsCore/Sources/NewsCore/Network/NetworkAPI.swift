@@ -11,23 +11,45 @@ import Foundation
 public enum NetworkAPI {}
 
 public protocol NetworkStore {
-    func get(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void)
-    func post(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void)
+    func get(with request: NetworkAPI.Request, completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void)
+    func get<T: Decodable>(with request: NetworkAPI.Request, type: T.Type, decoder: JSONDecoder, completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void)
+    func post(with request: NetworkAPI.Request, completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void)
+    func post<T: Decodable>(with request: NetworkAPI.Request, type: T.Type, decoder: JSONDecoder, completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void)
 }
 
 public protocol NetworkServiceType {
     
     /// Creates a task that retrieves the contents of a URL based on the specified GET request object, and calls a handler upon completion.
+    ///
     /// - Parameters:
     ///   - request: A network request object that provides the URL, parameters, headers, and so on.
     ///   - completion: The completion handler to call when the load request is complete.
-    func get(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void)
+    func get(with request: NetworkAPI.Request, completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void)
+    
+    /// Creates a task that retrieves the decoded contents of a URL based on the specified GET request object, and calls a handler upon completion.
+    ///
+    /// - Parameters:
+    ///   - request: A network request object that provides the URL, parameters, headers, and so on.
+    ///   - type: The type of the response data to decode.
+    ///   - decoder: The decoder to use for parsing the codable response.
+    ///   - completion: The completion handler to call when the load request is complete.
+    func get<T: Decodable>(with request: NetworkAPI.Request, type: T.Type, decoder: JSONDecoder, completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void)
     
     /// Creates a task that retrieves the contents of a URL based on the specified POST request object, and calls a handler upon completion.
+    /// 
     /// - Parameters:
     ///   - request: A network request object that provides the URL, parameters, headers, and so on.
     ///   - completion: The completion handler to call when the load request is complete.
-    func post(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void)
+    func post(with request: NetworkAPI.Request, completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void)
+    
+    /// Creates a task that retrieves the decoded contents of a URL based on the specified POST request object, and calls a handler upon completion.
+    ///
+    /// - Parameters:
+    ///   - request: A network request object that provides the URL, parameters, headers, and so on.
+    ///   - type: The type of the response data to decode.
+    ///   - decoder: The decoder to use for parsing the codable response.
+    ///   - completion: The completion handler to call when the load request is complete.
+    func post<T: Decodable>(with request: NetworkAPI.Request, type: T.Type, decoder: JSONDecoder, completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void)
 }
 
 // MARK: - Requests/Responses
@@ -35,10 +57,10 @@ public protocol NetworkServiceType {
 public extension NetworkAPI {
     
     struct Request {
-        let url: String
-        let parameters: [String: Any]?
-        let headers: [String: String]?
-        let timeoutInterval: TimeInterval?
+        public let url: String
+        public let parameters: [String: Any]?
+        public let headers: [String: String]?
+        public let timeoutInterval: TimeInterval?
         
         public init(
             url: String,
@@ -54,17 +76,21 @@ public extension NetworkAPI {
     }
     
     struct Response {
-        let data: Data?
-        let headers: [String: String]
-        let statusCode: Int
+        public let data: Data?
+        public let headers: [String: String]
+        public let statusCode: Int
+    }
+    
+    struct DecodedResponse<T: Decodable> {
+        public let model: T
+        public let headers: [String: String]
+        public let statusCode: Int
     }
 }
 
 public extension NetworkAPI {
     
     struct Error: Swift.Error {
-        public let code: String
-        public let message: String
         public let request: Request?
         public let response: Response?
         public let internalError: Swift.Error?
@@ -85,24 +111,6 @@ public extension NetworkAPI {
             self.request = request
             self.response = response
             self.internalError = internalError
-            
-            // Transient model for parsing
-            struct ServerResponse: Decodable {
-                let code: String
-                let message: String
-            }
-            
-            if let data = response?.data,
-                let payload = try? JSONDecoder.default.decode(
-                    ServerResponse.self,
-                    from: data
-                ) {
-                self.code = payload.code
-                self.message = payload.message
-            } else {
-                self.code = ""
-                self.message = ""
-            }
         }
     }
 }
@@ -116,8 +124,6 @@ extension NetworkAPI.Error: CustomStringConvertible {
             url: \(request?.url ?? "")
         },
         Response: {
-            code: \(code),
-            message: \(message),
             status: \(response?.statusCode ?? 0)
         }
         """

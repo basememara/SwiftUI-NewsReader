@@ -17,11 +17,19 @@ public struct NetworkService: NetworkServiceType {
 
 public extension NetworkService {
     
-    func get(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void) {
+    func get(with request: NetworkAPI.Request, completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void) {
         store.get(with: request, completion: completion)
     }
     
-    func post(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void) {
+    func get<T: Decodable>(with request: NetworkAPI.Request, type: T.Type, decoder: JSONDecoder, completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void) {
+        store.get(with: request, type: type, decoder: decoder, completion: completion)
+    }
+    
+    func post(with request: NetworkAPI.Request, completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void) {
         store.post(with: request, completion: completion)
+    }
+    
+    func post<T: Decodable>(with request: NetworkAPI.Request, type: T.Type, decoder: JSONDecoder, completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void) {
+        store.post(with: request, type: type, decoder: decoder, completion: completion)
     }
 }

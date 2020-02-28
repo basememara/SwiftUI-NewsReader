@@ -47,8 +47,14 @@ public extension ArticleNetworkStore {
             headers: ["X-Api-Key": constants.newsAPIKey]
         )
         
-        networkService.get(with: request) {
-            guard case .success(let value) = $0 else {
+        // Transient model for parsing
+        struct ServerResponse: Decodable {
+            let totalResults: Int
+            let articles: [Article]
+        }
+        
+        networkService.get(with: request, type: ServerResponse.self, decoder: jsonDecoder) {
+            guard case .success(let response) = $0 else {
                 // Handle no modified data and return success
                 if $0.error?.response?.statusCode == 304 {
                     completion(.success([]))
@@ -60,23 +66,7 @@ public extension ArticleNetworkStore {
                 return
             }
             
-            DispatchQueue.transform.async {
-                do {
-                    // Transient model for parsing
-                    struct ServerResponse: Decodable {
-                        let totalResults: Int
-                        let articles: [Article]
-                    }
-                    
-                    // Parse response data
-                    let payload = try self.jsonDecoder.decode(ServerResponse.self, from: value)
-                    DispatchQueue.main.async { completion(.success(payload.articles)) }
-                } catch {
-                    self.log.error("An error occured while parsing the articles: \(error).")
-                    DispatchQueue.main.async { completion(.failure(.parseFailure(error))) }
-                    return
-                }
-            }
+            completion(.success(response.model.articles))
         }
     }
 }

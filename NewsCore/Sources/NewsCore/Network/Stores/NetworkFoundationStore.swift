@@ -7,13 +7,14 @@
 
 import Foundation
 
-public struct NetworkFoundationStore: NetworkStore {
-
-}
+public struct NetworkFoundationStore: NetworkStore {}
 
 public extension NetworkFoundationStore {
     
-    func get(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void) {
+    func get(
+        with request: NetworkAPI.Request,
+        completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void
+    ) {
         guard let url = URL(string: request.url) else {
             completion(.failure(NetworkAPI.Error(request: request)))
             return
@@ -35,11 +36,30 @@ public extension NetworkFoundationStore {
             completionHandler: completion
         ).resume()
     }
+    
+    func get<T: Decodable>(
+        with request: NetworkAPI.Request,
+        type: T.Type,
+        decoder: JSONDecoder,
+        completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void
+    ) {
+        get(with: request) {
+            switch $0 {
+            case .success(let response):
+                self.decode(request, response, type, decoder, completion)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
 
 public extension NetworkFoundationStore {
     
-    func post(with request: NetworkAPI.Request, completion: @escaping (Result<Data, NetworkAPI.Error>) -> Void) {
+    func post(
+        with request: NetworkAPI.Request,
+        completion: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void
+    ) {
         guard let url = URL(string: request.url) else {
             completion(.failure(NetworkAPI.Error(request: request)))
             return
@@ -63,6 +83,22 @@ public extension NetworkFoundationStore {
             completionHandler: completion
         ).resume()
     }
+    
+    func post<T: Decodable>(
+        with request: NetworkAPI.Request,
+        type: T.Type,
+        decoder: JSONDecoder,
+        completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void
+    ) {
+        post(with: request) {
+            switch $0 {
+            case .success(let response):
+                self.decode(request, response, type, decoder, completion)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
 
 // MARK: - Helpers
@@ -70,6 +106,7 @@ public extension NetworkFoundationStore {
 private extension URLSession {
     
     /// Creates a task that retrieves the contents of a URL based on the specified URL request object, and calls a handler upon completion.
+    ///
     /// - Parameters:
     ///   - request: A URL request object that provides the URL, cache policy, request type, body data or body stream, and so on.
     ///   - originalRequest: The original network request.
@@ -77,7 +114,7 @@ private extension URLSession {
     func dataTask(
         with request: URLRequest,
         original originalRequest: NetworkAPI.Request,
-        completionHandler: @escaping (Result<Data, NetworkAPI.Error>) -> Void
+        completionHandler: @escaping (Result<NetworkAPI.Response, NetworkAPI.Error>) -> Void
     ) -> URLSessionDataTask {
         dataTask(with: request) { (data, response, error) in
             if let error = error {
@@ -110,7 +147,56 @@ private extension URLSession {
                 return
             }
             
-            DispatchQueue.main.async { completionHandler(.success(data)) }
+            DispatchQueue.main.async {
+                let networkResponse = NetworkAPI.Response(data: data, headers: headers, statusCode: httpResponse.statusCode)
+                completionHandler(.success(networkResponse))
+            }
+        }
+    }
+}
+
+private extension NetworkFoundationStore {
+    
+    /// Decodes a response.
+    func decode<T: Decodable>(
+        _ request: NetworkAPI.Request,
+        _ response: NetworkAPI.Response,
+        _ type: T.Type,
+        _ decoder: JSONDecoder,
+        _ completion: @escaping (Result<NetworkAPI.DecodedResponse<T>, NetworkAPI.Error>) -> Void
+    ) {
+        guard let data = response.data else {
+            // No data was found in the response
+            let error = NetworkAPI.Error(
+                request: request,
+                response: response,
+                internalError: DataError.parseFailure(nil)
+            )
+            
+            completion(.failure(error))
+            return
+        }
+        
+        DispatchQueue.transform.async {
+            do {
+                let decodedResponse = NetworkAPI.DecodedResponse(
+                    model: try decoder.decode(type, from: data),
+                    headers: response.headers,
+                    statusCode: response.statusCode
+                )
+                
+                DispatchQueue.main.async {
+                    completion(.success(decodedResponse))
+                }
+            } catch {
+                let error = NetworkAPI.Error(
+                    request: request,
+                    response: response,
+                    internalError: DataError.parseFailure(nil)
+                )
+                
+                DispatchQueue.main.async { completion(.failure(error)) }
+            }
         }
     }
 }
